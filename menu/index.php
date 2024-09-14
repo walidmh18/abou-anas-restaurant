@@ -35,42 +35,87 @@
 
             <div class="swiper-wrapper">
 
-                <div class="pack swiper-slide">
-                    <img src="../images/pack.png" alt="pack">
-                    <div class="content">
-                        <div class="name">
-                            <p class="fr">2 Personnes</p>
-                            <p class="ar">شخصين</p>
+                <?php
 
-                        </div>
-                        <ul class="plats">
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                        </ul>
+                $sql = "SELECT * 
+    FROM `packs`";
+                $result = mysqli_query($con, $sql);
+                // $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
-                        <div class="bottom">
-                            <h2 class="price">300DA</h2>
-                            <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                            <div class="quantity">
 
-                                <button onclick="redu(this.nextElementSibling)">
-                                    <i class="fa-regular fa-minus"></i>
 
-                                </button>
-                                <input type="number" value="0" min="0" onblur="corr(this)">
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
-                                <button onclick="incr(this.previousElementSibling)">
-                                    <i class="fa-regular fa-plus"></i>
-                                </button>
+                    // echo 'asd';
+                    // echo '<pre>';
+                    // print_r($row);
+                    // echo '</pre>';
+
+                    // echo $row['id'];
+
+                    $id = $row['id'];
+                    $fr = $row['name_fr'];
+                    $ar = $row['name_ar'];
+                    $img = $row['image_address'];
+                    $price = $row['price'];
+
+                    $contents = json_decode($row['contents']);
+
+                    // foreach ($contents as $x => $y) {
+                    //     echo $x.'='.$y;
+                    // }
+
+                ?>
+
+                    <div class="pack swiper-slide" data-type="pack" id="<?= $id ?>">
+                        <img src="<?= $img; ?>" alt="pack">
+                        <div class="content">
+                            <div class="name">
+                                <p class="fr"><?= $fr; ?></p>
+                                <p class="ar"><?= $ar; ?></p>
+
                             </div>
+                            <ul class="plats">
+                                
 
+                                <?php 
+                                foreach ($contents as $x => $y) {
+                                    // echo $x.'='.$y;
+                                    $query = "SELECT name_fr FROM `plats` WHERE id='$x'";
+                                    $res = mysqli_query($con, $query);
+                                    while ($el = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
+                                        
+                                    
+
+                                ?>
+                                <li><?= $y.'* '.$el['name_fr'] ?></li>
+                                
+                                <?php }} 
+                                ?>
+                            </ul>
+
+                            <div class="bottom">
+                                <h2 class="price"><?= $price ?> DA</h2>
+                                <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
+                                <div class="quantity">
+
+                                    <button onclick="redu(this.nextElementSibling)">
+                                        <i class="fa-regular fa-minus"></i>
+
+                                    </button>
+                                    <input type="number" value="0" min="0" onblur="corr(this)">
+
+                                    <button onclick="incr(this.previousElementSibling)">
+                                        <i class="fa-regular fa-plus"></i>
+                                    </button>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
 
-                <div class="pack swiper-slide">
+                <!-- <div class="pack swiper-slide">
                     <img src="../images/pack.png" alt="pack">
                     <div class="content">
                         <div class="name">
@@ -156,7 +201,7 @@
                             <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
             <div class="swiper-pagination"></div>
@@ -195,7 +240,7 @@
                 <h2 class="ar"><?= $ar; ?></h2>
             </div>
 
-            <div class="itemsContainer">
+            <div class="itemsContainer" data-type="plat">
 
                 <?php
 
@@ -219,7 +264,7 @@
                 ?>
 
 
-                    <div class="plat">
+                    <div class="plat" id="<?= $plat_id; ?>">
                         <div class="img">
                             <img src="<?= $img; ?>" alt="">
 
@@ -453,7 +498,7 @@
             </div>
         </div>
         <div class="itemsContainer">
-            <div class="plat">
+            <!-- <div class="plat">
                 <div class="left">
                     <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
                         <i class="fa-solid fa-trash"></i>
@@ -508,7 +553,7 @@
                     <div class="con">2x chorba</div>
                     <div class="con">2x chorba</div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="cartTotal">
             <h2>Total: <span id="totalPrice1">1200DA</span></h2>
@@ -574,23 +619,32 @@
         </div>
     </div>
 
-    <div class="sidePanel emporter active">
+    <div class="sidePanel emporter">
         <div class="">
             <h1 class="pageTitle">Emporter</h1>
         </div>
         <div class="itemsContainer">
             <div class="container">
-                <div class="name">
-                    <h2 class="fr">Numéro de table</h2>
-                    <h2 class="ar">رقم الطاولة</h2>
+                <div>
+                    <label for="livName" class="persInfoLabel">
+                        <p class="fr">Nom</p>
+                        <p class="ar">الاسم</p>
+                    </label>
+
+                    <input type="text" name="livNum" id="livNum" placeholder="Nom et prénom">
+
+                </div>
+                <div>
+                    <label for="livNum" class="persInfoLabel">
+                        <p class="fr">Numéro</p>
+                        <p class="ar">رقم الهاتف</p>
+                    </label>
+
+                    <input type="text" name="livLocation" id="livLocation" placeholder="0555 55 55 55">
+
                 </div>
 
-                <div class="input">
 
-                    <button onclick="redu(this.nextElementSibling)"><i class="fa-solid fa-minus"></i></button>
-                    <input type="number" name="" id="" value="0">
-                    <button onclick="incr(this.previousElementSibling)"><i class="fa-solid fa-plus"></i></button>
-                </div>
             </div>
         </div>
         <div class="cartTotal">
@@ -603,18 +657,35 @@
         </div>
         <div class="itemsContainer">
             <div class="container">
-                <div class="name">
-                    <h2 class="fr">Numéro de table</h2>
-                    <h2 class="ar">رقم الطاولة</h2>
+                <div>
+                    <label for="livName" class="persInfoLabel">
+                        <p class="fr">Nom</p>
+                        <p class="ar">الاسم</p>
+                    </label>
+
+                    <input type="text" name="livNum" id="livNum" placeholder="Nom et prénom">
+
                 </div>
+                <div>
+                    <label for="livNum" class="persInfoLabel">
+                        <p class="fr">Numéro</p>
+                        <p class="ar">رقم الهاتف</p>
+                    </label>
 
-                <div class="input">
+                    <input type="text" name="livLocation" id="livLocation" placeholder="0555 55 55 55">
 
-                    <button onclick="redu(this.nextElementSibling)"><i class="fa-solid fa-minus"></i></button>
-                    <input type="number" name="" id="" value="0">
-                    <button onclick="incr(this.previousElementSibling)"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div>
+                    <label for="livLocation" class="persInfoLabel">
+                        <p class="fr">Location</p>
+                        <p class="ar">الموقع</p>
+                    </label>
+
+                    <input type="text" name="livName" id="livName" placeholder="Baba H'sen, Alger">
                 </div>
             </div>
+
+
         </div>
         <div class="cartTotal">
             <h2>Total: <span id="totalPrice3">1200DA</span></h2>

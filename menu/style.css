@@ -1,15 +1,15 @@
-:root{
+:root {
    --swiper-theme-color: var(--b2);
    --swiper-pagination-bottom: -3em;
 }
 
-body{
+body {
    padding: 2em;
    position: relative;
    margin-bottom: 5rem;
 }
 
-.pageTitle{
+.pageTitle {
    color: var(--l1);
    font-size: 7em;
    position: relative;
@@ -18,7 +18,7 @@ body{
    flex-shrink: 1;
 }
 
-.pageTitle::after{
+.pageTitle::after {
    content: '';
    background: var(--b2);
    width: 110%;
@@ -29,13 +29,13 @@ body{
    border-radius: 100vmax;
 }
 
-.category{
+.category {
    margin: 3em 0 6em;
 
 }
 
 
-.categoryTitle{ 
+.categoryTitle {
    color: var(--l1);
    display: flex;
    justify-content: space-between;
@@ -43,62 +43,64 @@ body{
    font-size: 3em;
    margin-bottom: 1em;
 }
-.categoryTitle div{
+
+.categoryTitle div {
    width: 20px;
    height: 4px;
    border-radius: 100vmax;
    background: var(--b2);
 }
 
-.categoryTitle h2.ar{
+.categoryTitle h2.ar {
    font-weight: 400;
 }
 
 
-.swiper-container{
+.swiper-container {
    position: relative;
 }
-.pack{
+
+.pack {
    background: var(--d2);
    border-radius: 2em;
    overflow: hidden;
 }
 
-.pack img{
+.pack img {
    width: 100%;
    aspect-ratio: 5/3;
    object-fit: cover;
 }
 
-.pack .content{
+.pack .content {
    padding: 2em;
 }
 
-.pack .content .name{
+.pack .content .name {
    color: var(--l1);
    font-size: 1.8em;
    margin-bottom: 1em;
 }
 
-.pack .content .plats{
+.pack .content .plats {
    color: var(--l2);
    margin-bottom: 1em;
 }
 
 
-.pack .bottom{
+.pack .bottom {
    display: flex;
    justify-content: space-between;
    align-items: center;
 }
 
-.price{
+.price {
    color: var(--b2);
    font-size: 2.5em;
 }
 
-.addtocart{
-   color:var(--b1);
+.addtocart {
+   color: var(--b1);
    background: var(--b2);
    width: 3em;
    height: 3em;
@@ -108,26 +110,30 @@ body{
    display: none;
 }
 
-button.addtocart.active{
+button.addtocart.active {
    display: grid;
 }
 
 
 
 
-.itemsContainer{
+.itemsContainer {
    display: grid;
-   grid-template-columns: repeat(1,1fr);
+   grid-template-columns: repeat(1, 1fr);
    gap: 2em;
    margin-top: 3em;
 
 }
-.plat{
+
+.plat {
    height: 20em;
 
 }
 
- .plat ,.sandwich, .cart .pack, .info .orderType{
+.plat,
+.sandwich,
+.cart .pack,
+.info .orderType {
    background: var(--d2);
    padding: 2.4em;
    color: var(--l1);
@@ -135,19 +141,23 @@ button.addtocart.active{
    flex-direction: column;
    justify-content: space-between;
    border-radius: 2em;
+   overflow: visible;
    position: relative;
 }
 
 
 
 .sidePanel .itemsContainer .container,
-   .plat ,.pack, .sandwich, .info .orderType{
+.plat,
+.pack,
+.sandwich,
+.info .orderType {
    box-shadow: #0000002E 0 10px 10px 0;
 
 }
 
 
- .plat .img{
+.plat .img {
    height: 80%;
    position: absolute;
    right: -15%;
@@ -155,17 +165,18 @@ button.addtocart.active{
    transform: translateY(-50%);
 }
 
- .plat .img img{
+.plat .img img {
    height: 100%;
 }
- .plat .bottom{
+
+.plat .bottom {
    display: flex;
    justify-content: space-between;
    width: 70%;
 }
 
 
-.quantity{
+.quantity {
    display: none;
    color: var(--b1);
    background: var(--b2);
@@ -176,56 +187,57 @@ button.addtocart.active{
    height: 1.5em;
 }
 
-.sandwich .quantity{
+.sandwich .quantity {
    display: flex;
 }
 
-.quantity.active{
+.quantity.active {
    display: flex;
 }
 
 
-.quantity input{
+.quantity input {
    all: unset;
    width: 2em;
    text-align: center;
 }
- .platName{
+
+.platName {
    font-size: 2.4em;
 }
 
 
-.actionBtns{
+.actionBtns {
    display: flex;
    width: 100%;
    gap: 1em;
    position: fixed;
    bottom: 0;
    left: 0;
-   padding:  0 2em 6em;
+   padding: 0 2em 6em;
    z-index: 100;
 }
 
-.actionBtns div > button{
+.actionBtns div>button {
    /* width: 100%; */
    display: none;
    transition: 0.3s;
 }
 
-.actionBtns div > button.active{
+.actionBtns div>button.active {
    display: block;
 }
 
-.actionBtns .midBtns{
+.actionBtns .midBtns {
    display: flex;
    flex-direction: column;
    flex-grow: 1;
 }
 
-.actionBtns > button{
+.actionBtns>button {
    /* height: 3em;
    width: 3em; */
-   padding: 1em ;
+   padding: 1em;
    display: block;
    text-align: center;
    border-radius: 1em;
@@ -235,26 +247,26 @@ button.addtocart.active{
    transition: 0.3s;
 }
 
-.actionBtns > button.active{
+.actionBtns>button.active {
    display: block;
 }
 
-.actionBtns > button.backBtn{
+.actionBtns>button.backBtn {
    background: var(--red);
    color: var(--l-red);
 }
 
-.actionBtns > button.g-btn{
+.actionBtns>button.g-btn {
    background: var(--green);
    color: var(--l-green);
 }
 
-button.checkCartBtn{
+button.checkCartBtn {
    display: none;
 }
 
 
-.sandwich.addSandwich{
+.sandwich.addSandwich {
    display: flex;
    align-items: center;
    justify-content: space-between;
@@ -263,26 +275,26 @@ button.checkCartBtn{
    cursor: pointer;
 }
 
-.sandwich.addSandwich .platName{
+.sandwich.addSandwich .platName {
    font-size: 2em;
    color: var(--l1);
 }
 
-.sandwich.addSandwich i{
+.sandwich.addSandwich i {
    font-size: 3em;
 }
 
-.sandwich .top{
+.sandwich .top {
    display: flex;
    justify-content: space-between;
    align-items: center;
 }
 
-.sandwich .top i{
+.sandwich .top i {
    font-size: 3em;
 }
 
-.sandwich .contents .header{
+.sandwich .contents .header {
    display: flex;
    align-items: center;
    justify-content: space-between;
@@ -291,28 +303,28 @@ button.checkCartBtn{
    margin: 2em 0 1em;
 }
 
-.sandwich .contents .ingredient{
+.sandwich .contents .ingredient {
    display: flex;
    justify-content: space-between;
    margin-bottom: 1em;
 
 }
 
-.sandwich .contents .ingredient > * {
+.sandwich .contents .ingredient>* {
    font-size: 1.6em;
 }
 
-.sandwich .contents .ingredient .quantity{
+.sandwich .contents .ingredient .quantity {
    font-size: 1em;
 }
 
-.sandwich .contents .ingredient .price{
+.sandwich .contents .ingredient .price {
    display: flex;
    align-items: center;
    gap: 1em;
 }
 
-.sandwich .contents .ingredient .unitPrice{
+.sandwich .contents .ingredient .unitPrice {
    text-wrap: nowrap;
 }
 
@@ -327,9 +339,9 @@ button.checkCartBtn{
    --toggle-wider: 3em;
    --color-grey: var(--d1);
    --color-green: var(--b2);
-  }
-  
-  .slider {
+}
+
+.slider {
    display: inline-block;
    width: var(--button-width);
    height: var(--button-height);
@@ -337,9 +349,9 @@ button.checkCartBtn{
    border-radius: calc(var(--button-height) / 2);
    position: relative;
    transition: 0.3s all ease-in-out;
-  }
-  
-  .slider::after {
+}
+
+.slider::after {
    content: "";
    display: inline-block;
    width: var(--toggle-diameter);
@@ -351,30 +363,30 @@ button.checkCartBtn{
    transform: translateX(var(--button-toggle-offset));
    box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
    transition: 0.3s all ease-in-out;
-  }
-  
-  .switch input[type="checkbox"]:checked + .slider {
+}
+
+.switch input[type="checkbox"]:checked+.slider {
    background-color: var(--color-green);
-  }
-  
-  .switch input[type="checkbox"]:checked + .slider::after {
+}
+
+.switch input[type="checkbox"]:checked+.slider::after {
    transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
    box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
-  }
-  
-  .switch input[type="checkbox"] {
-   display: none;
-  }
-  
-  .switch input[type="checkbox"]:active + .slider::after {
-   width: var(--toggle-wider);
-  }
-  
-  .switch input[type="checkbox"]:checked:active + .slider::after {
-   transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
-  }
+}
 
-.sidePanel{
+.switch input[type="checkbox"] {
+   display: none;
+}
+
+.switch input[type="checkbox"]:active+.slider::after {
+   width: var(--toggle-wider);
+}
+
+.switch input[type="checkbox"]:checked:active+.slider::after {
+   transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+}
+
+.sidePanel {
    height: 100lvh;
    padding: 2em;
    display: flex;
@@ -391,11 +403,11 @@ button.checkCartBtn{
 
 }
 
-.sidePanel.active{
+.sidePanel.active {
    right: 0;
 }
 
-.cart .topRow{
+.cart .topRow {
    font-size: 1.5em;
    color: var(--l1);
    display: flex;
@@ -411,18 +423,19 @@ button.checkCartBtn{
 
 
 
-.sidePanel .itemsContainer{
+.sidePanel .itemsContainer {
    display: flex;
    flex-direction: column;
+   overflow: auto;
    flex: 1;
 }
 
-.sidePanel > div{
+.sidePanel>div {
    flex: 1 auto 1;
 }
 
 
-.cart .topRow .right{
+.cart .topRow .right {
    display: flex;
    gap: 1em;
    align-items: center;
@@ -430,7 +443,8 @@ button.checkCartBtn{
 
 
 
-.cart .plat ,.cart .pack .header{
+.cart .plat,
+.cart .pack .header {
    display: flex;
    flex-direction: row;
    height: unset;
@@ -442,64 +456,65 @@ button.checkCartBtn{
 
 
 
-.cart .pack .header{
+.cart .pack .header {
    border-bottom: var(--d1) 1px solid;
 }
 
-.cart  .platName{
+.cart .platName {
    font-size: 1.4em;
 }
 
-.cart  .right,
-.cart  .left{
+.cart .right,
+.cart .left {
    display: flex;
    align-items: center;
    gap: 0.5em;
 }
 
-.cart  .left button.del{
+.cart .left button.del {
    color: var(--red);
    font-size: 2em;
 }
 
-.cart  .right{
+.cart .right {
    font-size: 1.5em;
 }
 
-.cart  .right .qtyControls{
+.cart .right .qtyControls {
    display: grid;
 }
 
-.cart img{
+.cart img {
    max-height: 7em;
 
 }
 
-.cart .pack img{
-   aspect-ratio: unset;
+.cart .pack img {
+   aspect-ratio: 1/1;
+   border-radius: 2em;
    width: unset;
 }
 
-.cart  button.del,
-.cart  .qtyControls{
+.cart button.del,
+.cart .qtyControls {
    max-width: 0;
    overflow: hidden;
    transition: 0.3s;
 }
 
-.cart.edit  button.del,
-.cart.edit  .qtyControls{
+.cart.edit button.del,
+.cart.edit .qtyControls {
    max-width: 100px;
 
 }
 
-.cart .pack .contents{
+.cart .pack .contents {
    padding: 2em 2em 0;
    font-size: 1.4em;
    color: var(--l2);
 }
 
- .cartTotal{
+.cartTotal {
    color: var(--l1);
    font-size: 2em;
    font-weight: 400;
@@ -509,7 +524,7 @@ button.checkCartBtn{
 }
 
 
-.info .orderType{
+.info .orderType {
    flex-direction: row;
    justify-content: start;
    align-items: center;
@@ -522,18 +537,18 @@ button.checkCartBtn{
    cursor: pointer;
 }
 
-.info .orderType:hover{
+.info .orderType:hover {
    background: #303030;
 }
 
-.info .orderType .ar{
+.info .orderType .ar {
    font-size: 1em;
 }
 
 
 .sidePanel.table .itemsContainer,
 .sidePanel.emporter .itemsContainer,
-   .sidePanel.livraison .itemsContainer{
+.sidePanel.livraison .itemsContainer {
    display: grid;
    place-items: center;
 
@@ -543,7 +558,7 @@ button.checkCartBtn{
 
 .sidePanel.table .itemsContainer .container,
 .sidePanel.emporter .itemsContainer .container,
-   .sidePanel.livraison .itemsContainer .container{
+.sidePanel.livraison .itemsContainer .container {
    background: var(--d2);
    padding: 4em;
    border-radius: 2em;
@@ -552,7 +567,7 @@ button.checkCartBtn{
 
 .sidePanel.table .itemsContainer .name,
 .sidePanel.emporter .itemsContainer .name,
-   .sidePanel.livraison .itemsContainer .name{
+.sidePanel.livraison .itemsContainer .name {
    color: var(--l1);
    font-size: 2em;
    margin-bottom: 2em;
@@ -560,13 +575,13 @@ button.checkCartBtn{
 
 .sidePanel.table .itemsContainer .name .ar,
 .sidePanel.emporter .itemsContainer .name .ar,
-   .sidePanel.livraison .itemsContainer .name .ar{
+.sidePanel.livraison .itemsContainer .name .ar {
    font-size: 1em;
 }
 
 .sidePanel.table .input,
 .sidePanel.emporter .input,
-   .sidePanel.livraison .input{
+.sidePanel.livraison .input {
    background: var(--d1);
    padding: 10px;
    border-radius: 15px;
@@ -578,7 +593,7 @@ button.checkCartBtn{
 
 }
 
-.sidePanel input{
+.sidePanel input {
    background: none;
    border: none;
    outline: none;
@@ -587,11 +602,42 @@ button.checkCartBtn{
    width: 50%;
 }
 
-.sidePanel.table button{
+.sidePanel.table button {
    background: var(--d2);
    height: 100%;
    aspect-ratio: 1/1;
-   display: block;padding: 1em;
+   display: block;
+   padding: 1em;
    border-radius: 5px;
 
+}
+
+
+
+
+.sidePanel.emporter .itemsContainer .container,
+.sidePanel.livraison .itemsContainer .container {
+   display: grid;
+   border-radius: 3em;
+   gap: 2em;
+}
+
+.sidePanel.emporter input ,
+   .sidePanel.livraison input {
+   background: var(--d1);
+   width: 100%;
+   font-size: 1.5em;
+   padding: 0.7rem 1.5rem;
+   border-radius: 10px;
+   text-align: left;
+
+}
+
+.sidePanel.emporter .persInfoLabel ,
+   .sidePanel.livraison .persInfoLabel {
+   display: flex;
+   color: var(--l1);
+   align-items: center;
+   justify-content: space-between;
+   font-size: 2em;
 }
