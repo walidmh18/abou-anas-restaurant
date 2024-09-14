@@ -67,7 +67,7 @@ function updateStep() {
          let qua = b.parentElement.querySelector('.quantity')
          if (!qua.classList.contains('active')) {
             b.classList.add('active')
-            
+
          }
          b.addEventListener('click', () => {
             let inp = b.parentElement.querySelector('.quantity input')
@@ -198,14 +198,14 @@ function incr(e) {
 
    let found = false;
    let type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
-   let img,contents,id
+   let img, contents, id
 
    if (type == 'pack') {
       id = e.parentElement.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
       console.log(img);
       contents = e.parentElement.parentElement.parentElement.parentElement.querySelector('ul').innerHTML
-   }else{
+   } else {
       id = e.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
       console.log(img);
@@ -223,7 +223,7 @@ function incr(e) {
    for (let i = 0; i < the_cart.length; i++) {
       if (the_cart[i].id == id && the_cart[i].type == type) {
          the_cart[i].qty++
-         document.querySelector('#cartItem'+the_cart[i].id).querySelector('span.qty').innerHTML++
+         document.querySelector('#cartItem' + the_cart[i].id).querySelector('span.qty').innerHTML++
          found = true
       }
 
@@ -232,70 +232,70 @@ function incr(e) {
    }
 
    if (found == false) {
-      let obj = { id: id, qty: 1, type: type, img: img, name: name, price: price.replace(" DA","") , contents:contents}
+      let obj = { id: id, qty: 1, type: type, img: img, name: name, price: price.replace(" DA", ""), contents: contents }
       the_cart.push(obj)
       let sideEl = document.createElement('div')
       sideEl.classList.add(obj.type)
-      sideEl.id = 'cartItem'+obj.id
+      sideEl.id = 'cartItem' + obj.id
       if (type == 'plat') {
          sideEl.innerHTML = `
-         <div class="left">
-                    <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+<div class="left">
+   <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
+      <i class="fa-solid fa-trash"></i>
+   </button>
 
-                    <img src="${obj.img}" alt="">
+   <img src="${obj.img}" alt="">
 
-                    <div class="platName">
-                        <p class="fr">${obj.name.fr}</p>
-                        <p class="ar">${obj.name.ar}</p>
-                    </div>
-                </div>
+   <div class="platName">
+      <p class="fr">${obj.name.fr}</p>
+      <p class="ar">${obj.name.ar}</p>
+   </div>
+</div>
 
-                <div class="right">
-                    <p class="uprice">${obj.price}</p>
-                    <p>x<span class="qty">${obj.qty}</span></p>
-                    <div class="qtyControls">
-                        <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
-                    </div>
-                </div>
+<div class="right">
+   <p class="uprice">${obj.price}</p>
+   <p>x<span class="qty">${obj.qty}</span></p>
+   <div class="qtyControls">
+      <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
+      <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
+   </div>
+</div>
          `
-      }else if (type == 'pack'){
+      } else if (type == 'pack') {
          sideEl.innerHTML = `
-         <div class="header">
-                    <div class="left">
-                        <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+<div class="header">
+   <div class="left">
+      <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
+         <i class="fa-solid fa-trash"></i>
+      </button>
 
-                        <img src="${obj.img}" alt="">
+      <img src="${obj.img}" alt="">
 
-                        <div class="platName">
-                            <p class="fr">${obj.name.fr}</p>
-                            <p class="ar">${obj.name.ar}</p>
-                        </div>
-                    </div>
-                    
+      <div class="platName">
+         <p class="fr">${obj.name.fr}</p>
+         <p class="ar">${obj.name.ar}</p>
+      </div>
+   </div>
 
-                    <div class="right">
-                        <p class="uprice">${obj.price}</p>
-                        <p>x<span class="qty">${obj.qty}</span></p>
-                        <div class="qtyControls">
-                            <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
-                            <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="contents">
-                    ${obj.contents}
-                </div>
+
+   <div class="right">
+      <p class="uprice">${obj.price}</p>
+      <p>x<span class="qty">${obj.qty}</span></p>
+      <div class="qtyControls">
+         <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
+         <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+   </div>
+</div>
+<div class="contents">
+   ${obj.contents}
+</div>
          `
       }
 
       sideCartContainer.append(sideEl)
 
-   } 
+   }
 
    console.log(the_cart);
 
@@ -303,29 +303,29 @@ function incr(e) {
 }
 
 function increaseQty(e) {
-   e.innerHTML ++
+   e.innerHTML++
    updateTotal(the_cart)
 
 }
 
-function updateTotal(o){
-   let total=0
+function updateTotal(o) {
+   let total = 0
    let tp = [
       document.querySelector('#totalPrice'),
       document.querySelector('#totalPrice1'),
       document.querySelector('#totalPrice2'),
       document.querySelector('#totalPrice3')
    ]
-   o.forEach(el=>{
+   o.forEach(el => {
       console.log(Number(el.price));
       total += el.qty * Number(el.price)
    })
    console.log(total);
-   tp.forEach(t=>{
-      t.innerHTML = total+ 'DA'
+   tp.forEach(t => {
+      t.innerHTML = total + 'DA'
    })
 
-   
+
 }
 
 
@@ -333,10 +333,10 @@ function updateTotal(o){
 function redu(e) {
    let id = e.parentElement.parentElement.parentElement.id
    if (e.value > 0) {
-      
+
       e.value--
 
-      document.querySelector('#cartItem'+id).querySelector('span.qty').innerHTML--
+      document.querySelector('#cartItem' + id).querySelector('span.qty').innerHTML--
 
 
    }
@@ -347,7 +347,7 @@ function redu(e) {
    if (e.value == 0) {
       e.parentElement.classList.remove('active')
       e.parentElement.parentElement.querySelector('.addtocart').classList.add('active')
-      document.querySelector('#cartItem'+id).remove()
+      document.querySelector('#cartItem' + id).remove()
    }
 
 
@@ -438,11 +438,21 @@ const brochettes = [
       price: 150
    }
 ]
+
+function updateSandwiches() {
+   let sandwiches = sandwichesContainer.querySelectorAll('.sandwich') 
+   // sandwich.id = currSandwichesCount
+   for (let i = 0; i < sandwiches.length; i++) {
+      let sandwich = sandwiches[i]
+      sandwich.id = i
+      
+   }
+}
 function createSandwich() {
-
-
+   // console.log(currSandwichesCount);
    let sandwich = document.createElement('div');
    sandwich.classList.add('sandwich');
+
 
    let sandwichTop = `
 <div class="top">
@@ -477,6 +487,7 @@ function createSandwich() {
    brochettes.forEach(b => {
       let ing = document.createElement('div')
       ing.classList.add('ingredient')
+      ing.setAttribute('data-brochette', b.fr)
 
       ing.innerHTML +=
          `
@@ -488,13 +499,13 @@ function createSandwich() {
    <p class="unitPrice">${b.price}DA *</p>
    <div class="quantity">
 
-      <button onclick="redu(this.nextElementSibling)">
+      <button onclick="reduIng(this.nextElementSibling);updateSubtotal(this.parentElement.previousElementSibling,this.parentElement.nextElementSibling,this.nextElementSibling,this.parentElement.parentElement.parentElement.parentElement);">
          <i class="fa-regular fa-minus"></i>
 
       </button>
       <input type="number" value="0" min="0" onblur="corr(this)">
 
-      <button onclick="incr(this.previousElementSibling)">
+      <button onclick="incrIng(this.previousElementSibling);updateSubtotal(this.parentElement.previousElementSibling,this.parentElement.nextElementSibling,this.previousElementSibling,this.parentElement.parentElement.parentElement.parentElement);">
          <i class="fa-regular fa-plus"></i>
       </button>
    </div>
@@ -504,6 +515,7 @@ function createSandwich() {
    `
 
       sandwichContents.append(ing)
+      
 
    })
 
@@ -521,9 +533,14 @@ function createSandwich() {
          <div class="ar">بطاطا</div>
    </div>
    <label class="switch">
-         <input type="checkbox">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
          <span class="slider"></span>
    </label>
+</div>
+
+
+<div class="sandwichPrice">
+   <h2>0DA</h2>
 </div>
 `
 
@@ -531,9 +548,95 @@ function createSandwich() {
 
 
    sandwichesContainer.append(sandwich)
+   updateSandwiches()
+
+   let obj = {
+      id: sandwich.id,
+      type: 'sandwich',
+      price: 0,
+      ings: [],
+      add: [],
+      qty:1
+
+   }
+
+   the_cart.push(obj)
+
 
 }
 
+function incrIng(e){
+   e.value++
+   e.focus
+
+   
+
+}
+
+function reduIng(e) {
+   if (e.value >=1 ) {
+      e.value--
+
+   }
+   e.focus
+}
+function updateSubtotal(up,tp,qt,p) {
+   let name = up.parentElement.parentElement.querySelector('.fr').innerHTML
+   let unitPrice = up.innerHTML.replace('DA *','')
+   let quantity = qt.value
+
+   console.log(name);
+   let subTotal = unitPrice * quantity
+
+   tp.innerHTML = subTotal + 'DA'
+
+
+   let totalPriceContainer = p.querySelector('.sandwichPrice h2')
+   let subTotals = [...p.querySelectorAll('p.totalPrice')]
+   console.log(subTotals[0]);
+   let totalPrice = 0
+   for (let i = 0; i < subTotals.length; i++) {
+      let pr = Number(subTotals[i].innerHTML.replace('DA',''))
+      totalPrice += pr
+      
+   }
+   console.log(totalPrice);
+   totalPriceContainer.innerHTML = totalPrice + 'DA'
+
+   the_cart.forEach(o=>{
+      if (o.id == p.parentElement.id && o.type == 'sandwich') {
+         o.price = totalPrice
+         if(o.ings.find(e=> e.name == name)){
+            o.ings.find(e=> e.name == name).qty = quantity
+         }else{
+            o.ings.push({name:name,qty:quantity})
+
+         }
+         
+         console.log(the_cart);
+         
+      }
+   })
+}
+
+
+
+function toggleGarni(e){
+   let name = e.querySelector('.fr').innerHTML
+   let id = e.parentElement.parentElement.id
+   
+   if(the_cart.find(l=> l.id == id && l.type == 'sandwich')){
+      console.log(e.querySelector('input').checked);
+      if (e.querySelector('input').checked) {
+         the_cart.find(l=> l.id == id && l.type == 'sandwich').add.push(name)
+      } else {
+         let nid = the_cart.find(l=> l.id == id && l.type == 'sandwich').add.indexOf(name)
+         the_cart.find(l=> l.id == id && l.type == 'sandwich').add.splice(nid,1);
+         
+      }
+      console.log(the_cart);
+   }
+}
 
 let sandwichesCount = 0
 
@@ -555,6 +658,8 @@ function delSandwich(e) {
       step = 0
       updateStep()
    }
+   updateSandwiches()
+
 }
 
 
@@ -576,11 +681,11 @@ function reduceQty(e) {
    }
 
    console.log(e.parentElement.id);
-   let objId = e.parentElement.id.replace('cartItem','');
+   let objId = e.parentElement.id.replace('cartItem', '');
 
-   the_cart.forEach(c=>{
+   the_cart.forEach(c => {
       if (c.id == objId) {
-         c.qty --
+         c.qty--
       }
    })
    updateTotal(the_cart)
@@ -604,3 +709,4 @@ function fixOrderType(a) {
       updateStep()
    }
 }
+

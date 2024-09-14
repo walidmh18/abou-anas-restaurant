@@ -115,94 +115,7 @@
                     </div>
                 <?php } ?>
 
-                <!-- <div class="pack swiper-slide">
-                    <img src="../images/pack.png" alt="pack">
-                    <div class="content">
-                        <div class="name">
-                            <p class="fr">2 Personnes</p>
-                            <p class="ar">شخصين</p>
-
-                        </div>
-                        <ul class="plats">
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                        </ul>
-
-                        <div class="bottom">
-                            <h2 class="price">200DA</h2>
-                            <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pack swiper-slide">
-                    <img src="../images/pack.png" alt="pack">
-                    <div class="content">
-                        <div class="name">
-                            <p class="fr">2 Personnes</p>
-                            <p class="ar">شخصين</p>
-
-                        </div>
-                        <ul class="plats">
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                        </ul>
-
-                        <div class="bottom">
-                            <h2 class="price">200DA</h2>
-                            <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pack swiper-slide">
-                    <img src="../images/pack.png" alt="pack">
-                    <div class="content">
-                        <div class="name">
-                            <p class="fr">2 Personnes</p>
-                            <p class="ar">شخصين</p>
-
-                        </div>
-                        <ul class="plats">
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                        </ul>
-
-                        <div class="bottom">
-                            <h2 class="price">200DA</h2>
-                            <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pack swiper-slide">
-                    <img src="../images/pack.png" alt="pack">
-                    <div class="content">
-                        <div class="name">
-                            <p class="fr">2 Personnes</p>
-                            <p class="ar">شخصين</p>
-
-                        </div>
-                        <ul class="plats">
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                            <li>2* chorba</li>
-                        </ul>
-
-                        <div class="bottom">
-                            <h2 class="price">200DA</h2>
-                            <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div> -->
-
+                
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -299,78 +212,6 @@
         </div>
 
     <?php } ?>
-
-
-    <!-- <div class="category name">
-        <div class="categoryTitle">
-            <h2 class="fr">Entres</h2>
-            <div class="midHiphen"></div>
-            <h2 class="ar">أطباق</h2>
-        </div>
-
-        <div class="itemsContainer">
-
-            <div class="plat">
-                <div class="img">
-                    <img src="../images/plat1.png" alt="">
-
-                </div>
-                <div class="platName">
-                    <p class="fr">Soupe de Poisson</p>
-                    <p class="ar">حساء السمك</p>
-
-                </div>
-
-                <div class="bottom">
-                    <h2 class="price">300DA</h2>
-                    <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                    <div class="quantity">
-
-                        <button onclick="redu(this.nextElementSibling)">
-                            <i class="fa-regular fa-minus"></i>
-
-                        </button>
-                        <input type="number" value="0" min="0" onblur="corr(this)">
-
-                        <button onclick="incr(this.previousElementSibling)">
-                            <i class="fa-regular fa-plus"></i>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="plat">
-                <div class="img">
-                    <img src="../images/plat1.png" alt="">
-
-                </div>
-                <div class="platName">
-                    <p class="fr">Soupe de Poisson</p>
-                    <p class="ar">حساء السمك</p>
-
-                </div>
-
-                <div class="bottom">
-                    <h2 class="price">300DA</h2>
-                    <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
-                    <div class="quantity">
-
-                        <button onclick="redu(this.nextElementSibling)">
-                            <i class="fa-regular fa-minus"></i>
-
-                        </button>
-                        <input type="number" value="0" min="0" onblur="corr(this)">
-
-                        <button onclick="incr(this.previousElementSibling)">
-                            <i class="fa-regular fa-plus"></i>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 
     <div class="category sandwiches">
@@ -498,65 +339,10 @@
             </div>
         </div>
         <div class="itemsContainer">
-            <!-- <div class="plat">
-                <div class="left">
-                    <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-
-                    <img src="../images/plat1.png" alt="">
-
-                    <div class="platName">
-                        <p class="fr">Soupe de poisson</p>
-                        <p class="ar">حساء السمك</p>
-                    </div>
-                </div>
-
-                <div class="right">
-                    <p class="uprice">300</p>
-                    <p>x<span class="qty">1</span></p>
-                    <div class="qtyControls">
-                        <button onclick="this.parentElement.parentElement.querySelector('span.qty').innerHTML ++"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="pack">
-                <div class="header">
-                    <div class="left">
-                        <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-
-                        <img src="../images/plat1.png" alt="">
-
-                        <div class="platName">
-                            <p class="fr">Soupe de poisson</p>
-                            <p class="ar">حساء السمك</p>
-                        </div>
-                    </div>
-
-                    <div class="right">
-                        <p class="uprice">300</p>
-                        <p>x<span class="qty">1</span></p>
-                        <div class="qtyControls">
-                            <button onclick="this.parentElement.parentElement.querySelector('span.qty').innerHTML ++"><i class="fa-solid fa-chevron-up"></i></button>
-                            <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="contents">
-                    <div class="con">2x chorba</div>
-                    <div class="con">2x chorba</div>
-                    <div class="con">2x chorba</div>
-                    <div class="con">2x chorba</div>
-                </div>
-            </div> -->
+           
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice1">1200DA</span></h2>
+            <h2>Total: <span id="totalPrice1">0DA</span></h2>
         </div>
     </div>
 
