@@ -67,7 +67,7 @@
 
                 ?>
 
-                    <div class="pack swiper-slide" data-type="pack" id="<?= $id ?>">
+                    <div class="pack pack<?= $id ?> swiper-slide" data-type="pack" id="<?= $id ?>">
                         <img src="<?= $img; ?>" alt="pack">
                         <div class="content">
                             <div class="name">
@@ -146,7 +146,7 @@
         $ar = $row['name_ar'];
 
     ?>
-        <div class="category name">
+        <div class="category plats <?= $fr ?>">
             <div class="categoryTitle">
                 <h2 class="fr"><?= $fr; ?></h2>
                 <div class="midHiphen"></div>
@@ -177,7 +177,7 @@
                 ?>
 
 
-                    <div class="plat" id="<?= $plat_id; ?>">
+                    <div class="plat plat<?= $id ?>" id="<?= $plat_id; ?>">
                         <div class="img">
                             <img src="<?= $img; ?>" alt="">
 
@@ -377,7 +377,7 @@
             </div>
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice">1200DA</span></h2>
+            <h2>Total: <span id="totalPrice">0DA</span></h2>
         </div>
     </div>
 
@@ -417,7 +417,7 @@
                         <p class="ar">الاسم</p>
                     </label>
 
-                    <input type="text" name="livNum" id="livNum" placeholder="Nom et prénom">
+                    <input type="text" name="empNom" id="empNom" placeholder="Nom et prénom">
 
                 </div>
                 <div>
@@ -426,7 +426,7 @@
                         <p class="ar">رقم الهاتف</p>
                     </label>
 
-                    <input type="text" name="livLocation" id="livLocation" placeholder="0555 55 55 55">
+                    <input type="text" name="empNum" id="empNum" placeholder="0555 55 55 55">
 
                 </div>
 
@@ -434,7 +434,7 @@
             </div>
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice2">1200DA</span></h2>
+            <h2>Total: <span id="totalPrice2">0DA</span></h2>
         </div>
     </div>
     <div class="sidePanel livraison">
@@ -449,7 +449,7 @@
                         <p class="ar">الاسم</p>
                     </label>
 
-                    <input type="text" name="livNum" id="livNum" placeholder="Nom et prénom">
+                    <input type="text" name="livName" id="livName" placeholder="Nom et prénom">
 
                 </div>
                 <div>
@@ -458,7 +458,7 @@
                         <p class="ar">رقم الهاتف</p>
                     </label>
 
-                    <input type="text" name="livLocation" id="livLocation" placeholder="0555 55 55 55">
+                    <input type="text" name="livNum" id="livNum" placeholder="0555 55 55 55">
 
                 </div>
                 <div>
@@ -467,14 +467,14 @@
                         <p class="ar">الموقع</p>
                     </label>
 
-                    <input type="text" name="livName" id="livName" placeholder="Baba H'sen, Alger">
+                    <input type="text" name="livLocation" id="livLocation" placeholder="Baba H'sen, Alger">
                 </div>
             </div>
 
 
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice3">1200DA</span></h2>
+            <h2>Total: <span id="totalPrice3">0DA</span></h2>
         </div>
     </div>
 
@@ -489,6 +489,14 @@
         <button class="checkBtn g-btn"><i class="fa-regular fa-check"></i></button>
         <button class="checkCartBtn g-btn"><i class="fa-regular fa-cart-circle-check"></i></button>
     </div>
+
+    <form action="./createOrder.php" method="post" id="CartForm">
+        <input type="text" id="cartInp" name="cart">
+        <input type="text" name="type" id="typeInp">
+        <input type="text" name="total" id="totalInp">
+        <input type="text" name="client" id="clientInp">
+        <button type="submit">s</button>
+    </form>
 </body>
 
 </html>

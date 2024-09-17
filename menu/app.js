@@ -29,6 +29,18 @@ const livraison = document.querySelector('.sidePanel.livraison')
 
 let the_cart = []
 
+addtocartBtns.forEach(b => {
+   b.addEventListener('click', () => {
+      let inp = b.parentElement.querySelector('.quantity input')
+      incr(inp)
+   })
+})
+
+setInterval(() => {
+
+   // console.log(document.querySelector('.pack input').value)
+}, 1000);
+
 let step = 0
 updateStep()
 function updateStep() {
@@ -70,12 +82,10 @@ function updateStep() {
 
          }
          b.addEventListener('click', () => {
-            let inp = b.parentElement.querySelector('.quantity input')
 
 
             b.classList.remove('active')
             qua.classList.add('active')
-            incr(inp)
          })
       })
 
@@ -161,9 +171,20 @@ modifier.addEventListener('click', () => {
 })
 
 
+const finalForm = document.querySelector('#CartForm')
+
+
 checkCartBtn.addEventListener('click', () => {
    if (step == 2) {
+      let total = 0
       step = 3
+      the_cart.forEach(el => {
+         console.log(Number(el.price));
+         total += el.qty * Number(el.price)
+      })
+      document.querySelector('input#cartInp').value = JSON.stringify(the_cart)
+      document.querySelector('input#totalInp').value = total
+
    }
    updateStep()
 })
@@ -205,11 +226,16 @@ function incr(e) {
       img = e.parentElement.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
       console.log(img);
       contents = e.parentElement.parentElement.parentElement.parentElement.querySelector('ul').innerHTML
-   } else {
+   } else if (type == 'plat') {
       id = e.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
       console.log(img);
       contents = ''
+   } else if (type == 'sandwich') {
+      id = e.parentElement.parentElement.parentElement.parentElement.id
+      img = ''
+      contents = the_cart.find(q => q.id == id && q.type == 'sandwich').ings
+      // console.log(the_cart,id);
    }
    let name = {
       fr: e.parentElement.parentElement.parentElement.querySelector('.fr').innerHTML,
@@ -222,9 +248,14 @@ function incr(e) {
    console.log(name);
    for (let i = 0; i < the_cart.length; i++) {
       if (the_cart[i].id == id && the_cart[i].type == type) {
-         the_cart[i].qty++
-         document.querySelector('#cartItem' + the_cart[i].id).querySelector('span.qty').innerHTML++
-         found = true
+
+         console.log(the_cart);
+         if (document.querySelector('#cart' + type + the_cart[i].id)) {
+            the_cart[i].qty++
+            document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML++
+            found = true
+
+         }
       }
 
 
@@ -233,10 +264,11 @@ function incr(e) {
 
    if (found == false) {
       let obj = { id: id, qty: 1, type: type, img: img, name: name, price: price.replace(" DA", ""), contents: contents }
-      the_cart.push(obj)
+      if (type != 'sandwich') { the_cart.push(obj) }
       let sideEl = document.createElement('div')
       sideEl.classList.add(obj.type)
-      sideEl.id = 'cartItem' + obj.id
+      sideEl.id = 'cart' + obj.type + obj.id
+
       if (type == 'plat') {
          sideEl.innerHTML = `
 <div class="left">
@@ -257,7 +289,7 @@ function incr(e) {
    <p>x<span class="qty">${obj.qty}</span></p>
    <div class="qtyControls">
       <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
-      <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
+      <button onclick="reduceQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-down"></i></button>
    </div>
 </div>
          `
@@ -283,7 +315,7 @@ function incr(e) {
       <p>x<span class="qty">${obj.qty}</span></p>
       <div class="qtyControls">
          <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
-         <button onclick="reduceQty(this.parentElement.parentElement)"><i class="fa-solid fa-chevron-down"></i></button>
+         <button onclick="reduceQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-down"></i></button>
       </div>
    </div>
 </div>
@@ -291,22 +323,54 @@ function incr(e) {
    ${obj.contents}
 </div>
          `
-      }
+      } else if (type == 'sandwich') {
 
+
+
+         let contentsContainer = document.createElement('div')
+         contentsContainer.classList.add('contents')
+         obj.contents.forEach(a => {
+            let content = document.createElement('div')
+            content.innerHTML = a.qty + '* ' + a.name
+            contentsContainer.append(content)
+         })
+         sideEl.innerHTML = `
+<div class="header">
+   <div class="left">
+      <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
+         <i class="fa-solid fa-trash"></i>
+      </button>
+
+
+      <div class="platName">
+         <p class="fr">Sandwich</p>
+         <p class="ar">سندويش</p>
+      </div>
+   </div>
+
+
+   <div class="right">
+      <p class="uprice">${obj.price}</p>
+      <p>x<span class="qty">${obj.qty}</span></p>
+      <div class="qtyControls">
+         <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
+         <button onclick="reduceQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+   </div>
+</div>
+
+         `
+         sideEl.append(contentsContainer)
+      }
       sideCartContainer.append(sideEl)
 
    }
 
-   console.log(the_cart);
 
    updateTotal(the_cart)
 }
 
-function increaseQty(e) {
-   e.innerHTML++
-   updateTotal(the_cart)
 
-}
 
 function updateTotal(o) {
    let total = 0
@@ -331,13 +395,23 @@ function updateTotal(o) {
 
 
 function redu(e) {
-   let id = e.parentElement.parentElement.parentElement.id
+   let type, id
+   if (e.parentElement.parentElement.parentElement.id) {
+      id = e.parentElement.parentElement.parentElement.id
+      type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
+
+   } else {
+      id = e.parentElement.parentElement.parentElement.parentElement.id
+      type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
+
+   }
+   console.log(type);
    if (e.value > 0) {
 
       e.value--
 
-      document.querySelector('#cartItem' + id).querySelector('span.qty').innerHTML--
-
+      console.log('#cart' + type + id)
+      document.querySelector('#cart' + type + id).querySelector('span.qty').innerHTML--
 
    }
 
@@ -345,9 +419,15 @@ function redu(e) {
    e.focus()
 
    if (e.value == 0) {
-      e.parentElement.classList.remove('active')
-      e.parentElement.parentElement.querySelector('.addtocart').classList.add('active')
-      document.querySelector('#cartItem' + id).remove()
+      if (type == 'sandwich') {
+         delSandwich(e.parentElement.parentElement.parentElement.parentElement)
+      } else {
+         e.parentElement.parentElement.querySelector('.addtocart').classList.add('active')
+         e.parentElement.classList.remove('active')
+
+      }
+      document.querySelector('#cart' + type + id).remove()
+
    }
 
 
@@ -440,28 +520,30 @@ const brochettes = [
 ]
 
 function updateSandwiches() {
-   let sandwiches = sandwichesContainer.querySelectorAll('.sandwich') 
+   let sandwiches = sandwichesContainer.querySelectorAll('.sandwich')
    // sandwich.id = currSandwichesCount
    for (let i = 0; i < sandwiches.length; i++) {
       let sandwich = sandwiches[i]
       sandwich.id = i
-      
+      sandwich.classList.add('sandwich' + i)
+
    }
 }
 function createSandwich() {
    // console.log(currSandwichesCount);
    let sandwich = document.createElement('div');
    sandwich.classList.add('sandwich');
+   sandwich.setAttribute('data-type', 'sandwich')
 
 
    let sandwichTop = `
 <div class="top">
    <div class="platName">
       <h2 class="fr">
-         Sandwich <span>1</span>
+         Sandwich <span></span>
       </h2>
       <h2 class="ar">
-         سندويش <span>1</span>
+         سندويش <span></span>
       </h2>
    </div>
    <i class="fa-solid fa-minus" onclick="delSandwich(this.parentElement.parentElement)"></i>
@@ -515,7 +597,7 @@ function createSandwich() {
    `
 
       sandwichContents.append(ing)
-      
+
 
    })
 
@@ -540,7 +622,19 @@ function createSandwich() {
 
 
 <div class="sandwichPrice">
-   <h2>0DA</h2>
+   <div class="quantity">
+
+      <button onclick="redu(this.nextElementSibling)">
+         <i class="fa-regular fa-minus"></i>
+
+      </button>
+      <input type="number" value="0" min="0" onblur="corr(this)">
+
+      <button onclick="incr(this.previousElementSibling)">
+         <i class="fa-regular fa-plus"></i>
+      </button>
+   </div>
+   <h2 class="price">0DA</h2>
 </div>
 `
 
@@ -556,33 +650,34 @@ function createSandwich() {
       price: 0,
       ings: [],
       add: [],
-      qty:1
+      qty: 1
 
    }
+   console.log(the_cart);
 
    the_cart.push(obj)
 
 
 }
 
-function incrIng(e){
+function incrIng(e) {
    e.value++
    e.focus
 
-   
+
 
 }
 
 function reduIng(e) {
-   if (e.value >=1 ) {
+   if (e.value >= 1) {
       e.value--
 
    }
    e.focus
 }
-function updateSubtotal(up,tp,qt,p) {
+function updateSubtotal(up, tp, qt, p) {
    let name = up.parentElement.parentElement.querySelector('.fr').innerHTML
-   let unitPrice = up.innerHTML.replace('DA *','')
+   let unitPrice = up.innerHTML.replace('DA *', '')
    let quantity = qt.value
 
    console.log(name);
@@ -596,46 +691,80 @@ function updateSubtotal(up,tp,qt,p) {
    console.log(subTotals[0]);
    let totalPrice = 0
    for (let i = 0; i < subTotals.length; i++) {
-      let pr = Number(subTotals[i].innerHTML.replace('DA',''))
+      let pr = Number(subTotals[i].innerHTML.replace('DA', ''))
       totalPrice += pr
-      
+
    }
    console.log(totalPrice);
    totalPriceContainer.innerHTML = totalPrice + 'DA'
 
-   the_cart.forEach(o=>{
+   the_cart.forEach(o => {
       if (o.id == p.parentElement.id && o.type == 'sandwich') {
          o.price = totalPrice
-         if(o.ings.find(e=> e.name == name)){
-            o.ings.find(e=> e.name == name).qty = quantity
-         }else{
-            o.ings.push({name:name,qty:quantity})
+         if (o.ings.find(e => e.name == name)) {
+            o.ings.find(e => e.name == name).qty = quantity
+         } else {
+            o.ings.push({ name: name, qty: quantity })
 
          }
-         
+
          console.log(the_cart);
-         
+
+      }
+   })
+
+   refreshSandwichesInCart()
+   updateTotal(the_cart)
+
+}
+
+
+function refreshSandwichesInCart() {
+   the_cart.forEach(el => {
+      if (el.type == 'sandwich') {
+         let element = document.querySelector('#cartsandwich' + el.id)
+         element.querySelector('p.uprice').innerHTML = el.price + 'DA'
+         element.querySelector('span.qty').innerHTML = el.qty
+         let contents = element.querySelector('.contents')
+         contents.innerHTML = ''
+         el.ings.forEach(ing => {
+            let ingredient = document.createElement('div')
+            ingredient.classList.add('content')
+            ingredient.innerHTML = ing.qty + '* ' + ing.name
+            contents.append(ingredient)
+         })
+
+         el.add.forEach(ing => {
+            let ingredient = document.createElement('div')
+            ingredient.classList.add('content')
+            ingredient.innerHTML = '+' + ing
+            contents.append(ingredient)
+         })
+
       }
    })
 }
 
 
 
-function toggleGarni(e){
+function toggleGarni(e) {
    let name = e.querySelector('.fr').innerHTML
    let id = e.parentElement.parentElement.id
-   
-   if(the_cart.find(l=> l.id == id && l.type == 'sandwich')){
+
+   if (the_cart.find(l => l.id == id && l.type == 'sandwich')) {
       console.log(e.querySelector('input').checked);
       if (e.querySelector('input').checked) {
-         the_cart.find(l=> l.id == id && l.type == 'sandwich').add.push(name)
+         the_cart.find(l => l.id == id && l.type == 'sandwich').add.push(name)
       } else {
-         let nid = the_cart.find(l=> l.id == id && l.type == 'sandwich').add.indexOf(name)
-         the_cart.find(l=> l.id == id && l.type == 'sandwich').add.splice(nid,1);
-         
+         let nid = the_cart.find(l => l.id == id && l.type == 'sandwich').add.indexOf(name)
+         the_cart.find(l => l.id == id && l.type == 'sandwich').add.splice(nid, 1);
+
       }
       console.log(the_cart);
    }
+   refreshSandwichesInCart()
+
+
 }
 
 let sandwichesCount = 0
@@ -648,65 +777,179 @@ function addSandwich() {
    }
    createSandwich()
    sandwichesCount++
+   incr(document.querySelector('.sandwiches .itemsContainer').lastChild.querySelector('.sandwichPrice input'))
 }
 
 function delSandwich(e) {
+
+   let type, id
+   id = e.id
+   type = e.getAttribute('data-type')
+
    e.remove()
    sandwichesCount--
+   the_cart.splice(the_cart.indexOf(the_cart.find(o => o.id == e.id && o.type == 'sandwich')), 1)
 
-   if (sandwichesCount == 0 && step == 1) {
+   if (sandwichesCount == 0 && step == 1 && the_cart == []) {
       step = 0
       updateStep()
+
    }
+   console.log(the_cart);
    updateSandwiches()
+
+   document.querySelector('#cart' + type + id).remove()
+
 
 }
 
 
 
 function delCartItem(e) {
+   // the_cart.splice(indexOf(the_cart))
+   let type, id
    console.log(e);
    if (e.classList.contains('plat')) {
+      id = e.id
       e.remove()
+      type = 'plat'
    } else if (e.parentElement.classList.contains('pack')) {
+      id = e.parentElement.id
+      type = 'pack'
+
+
+
       e.parentElement.remove()
+   } else if (e.parentElement.classList.contains('sandwich')) {
+      id = e.parentElement.id
+      e.parentElement.remove()
+      type = 'sandwich'
+
    }
+
+   id = id.replace('cart', '').replace(type, '')
+   the_cart.splice(the_cart.indexOf(the_cart.find(u => u.id == id && u.type == type)), 1)
+   console.log(the_cart);
+
+   updateTotal(the_cart)
 }
 
 function reduceQty(e) {
-   if (e.querySelector('span.qty').innerHTML > 1) {
-      e.querySelector('span.qty').innerHTML--
-   } else if (e.querySelector('span.qty').innerHTML == 1) {
-      delCartItem(e.parentElement)
+
+   let type = e.parentElement.parentElement.parentElement.className
+   if (e.parentElement.parentElement.parentElement.className != 'plat' &&
+      e.parentElement.parentElement.parentElement.className != 'pack' &&
+      e.parentElement.parentElement.parentElement.className != 'sandwich') {
+      type = e.parentElement.parentElement.parentElement.parentElement.className
+      console.log(type);
+   }
+   let elid = e.parentElement.parentElement.parentElement.id || e.parentElement.parentElement.parentElement.parentElement.id
+   let id = elid.replace('cart', '').replace(type, '')
+   console.log(type, elid, id);
+
+   let inp
+
+   console.log(`.${type}${id} .quantity input[type="number"]`);
+
+   if (type != 'sandwich') {
+
+      inp = document.querySelector(`.${type}${id} .quantity input[type="number"]`)
+
+   } else {
+      inp = document.querySelector(`.${type}${id} .sandwichPrice .quantity input[type="number"]`)
+
    }
 
-   console.log(e.parentElement.id);
-   let objId = e.parentElement.id.replace('cartItem', '');
+   redu(inp)
 
-   the_cart.forEach(c => {
-      if (c.id == objId) {
-         c.qty--
-      }
-   })
+   if (e.innerHTML == 1) {
+      delCartItem(e.parentElement.parentElement.parentElement)
+   }
+
+
    updateTotal(the_cart)
 }
+
+function increaseQty(e) {
+   // e.innerHTML++
+   updateTotal(the_cart)
+
+   let type = e.parentElement.parentElement.parentElement.className
+   console.log(type);
+
+   if (e.parentElement.parentElement.parentElement.className != 'plat' && e.parentElement.parentElement.parentElement.className != 'pack' && e.parentElement.parentElement.parentElement.className != 'sandwich') {
+      type = e.parentElement.parentElement.parentElement.parentElement.className
+   }
+   let elid = e.parentElement.parentElement.parentElement.id || e.parentElement.parentElement.parentElement.parentElement.id
+   let id = elid.replace('cart', '').replace(type, '')
+   console.log(type, elid, id);
+
+
+   let inp
+
+   if (type != 'sandwich') {
+      inp = document.querySelector(`.${type}${id} .quantity input[type="number"]`)
+
+   } else {
+      inp = document.querySelector(`.${type}${id} .sandwichPrice .quantity input[type="number"]`)
+
+   }
+
+   incr(inp)
+
+}
+
+let orderType
 
 
 function fixOrderType(a) {
    if (step == 3) {
       step = 4
+
+
       if (a == 'sp') {
 
          table.classList.add('active')
+         orderType = 'sur place'
+         document.querySelector('#typeInp').value = 'sur place'
 
       } else if (a == 'emp') {
          emporter.classList.add('active')
+         orderType = 'emporter'
+         document.querySelector('#typeInp').value = 'emporter'
 
       } else if (a == 'liv') {
          livraison.classList.add('active')
+         orderType = 'livraison'
+         document.querySelector('#typeInp').value = 'livraison'
 
       }
       updateStep()
    }
 }
 
+let client
+
+plcommande.addEventListener('click', () => {
+   if (orderType == 'sur place') {
+      client = document.querySelector('.sidePanel.table input[type="number"]').value
+      document.querySelector('#clientInp').value = client
+   } else if (orderType == 'emporter') {
+      client = `
+         nom: ${document.querySelector('#empNom').value}
+         numero: ${document.querySelector('#empNum').value}
+
+      `
+      document.querySelector('#clientInp').value = client
+   } else if (orderType == 'livraison') {
+      client = `
+         nom: ${document.querySelector('#livName').value}
+         numero: ${document.querySelector('#livNum').value}
+         location: ${document.querySelector('#livLocation').value}
+
+      `
+      document.querySelector('#clientInp').value = client
+   }
+
+   finalForm.submit()
+})
