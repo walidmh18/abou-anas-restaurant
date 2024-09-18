@@ -1,0 +1,105 @@
+body{
+   font-size: 16px;
+}
+
+.body{
+   padding: 3em;
+}
+
+.title h1{
+   color: var(--l1);
+
+}
+
+.title p.date{
+   color: var(--l2);
+}
+
+.body .container{
+   display: flex;
+   gap: 2em;
+   margin: 2em 0;
+}
+
+.container .left{
+   display: flex;
+   flex-direction: column;
+   gap: 2em;
+}
+
+.stats{
+   display: flex;
+   gap: 1em;
+
+}
+
+.stat{
+   background: aliceblue;
+   border-radius: 1em;
+   box-shadow: #00000033 0 10px  10px 0;
+   padding: 2em;
+   color: var(--l1);
+}
+
+.stat .icon{
+   background: white;
+   border-radius: 0.5em;
+   display: inline-block;
+   width: 2em;
+   aspect-ratio: 1/1;
+   display: grid;
+   place-items: center;
+   margin-bottom: 1em;
+}
+
+.stat:nth-child(1){
+   background: var(--ui1);
+   
+}
+.stat:nth-child(1) i{
+   color: var(--ui1);
+}
+
+.stat:nth-child(2){
+   background: var(--ui2);
+}
+.stat:nth-child(2) i{
+   color: var(--ui2);
+}
+
+.stat:nth-child(3){
+   background: var(--ui3);
+}
+.stat:nth-child(3) i{
+   color: var(--ui3);
+}
+
+
+
+.left .rapport-jour{
+   background: var(--d2);
+   border-radius: 1em;
+   padding: 2em;
+   box-shadow: #00000033 0 10px 10px 0;
+}
+
+.left .rapport-jour .header{
+   color: var(--l1);
+   margin-bottom: 2em;
+}
+
+.left .rapport-jour .tableHeader{
+   display: flex;
+   color: var(--l2);
+   justify-content: space-between;
+
+}
+
+.table .tableElement{
+   display: flex;
+   justify-content: space-between;
+   background: var(--d1);
+   border-radius: 0.5em;
+   color: var(--l1);
+   padding: 1em;
+}
