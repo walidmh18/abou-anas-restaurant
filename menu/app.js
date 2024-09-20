@@ -225,7 +225,11 @@ function incr(e) {
       id = e.parentElement.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
       console.log(img);
-      contents = e.parentElement.parentElement.parentElement.parentElement.querySelector('ul').innerHTML
+      contents = '';
+      e.parentElement.parentElement.parentElement.parentElement.querySelectorAll('ul li').forEach(lii => {
+         contents += `${lii.innerHTML},`
+      });
+      contents = contents.slice(0,-1);
    } else if (type == 'plat') {
       id = e.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')

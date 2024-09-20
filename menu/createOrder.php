@@ -19,7 +19,10 @@ $sql = "INSERT INTO `orders`
       (plats,type,total,status,time,client)
       VALUES('$cart','$type','$total','confirmation','$currTime','$client')";
 
-// $response = mysqli_query($con,$sql);
+$response = mysqli_query($con,$sql);
+
+
+
 
 
 // echo ;
@@ -66,6 +69,6 @@ foreach (json_decode($_POST['cart']) as $e) {
    }
 }
 
-// header("Location: ./success");
+header("Location: ./success");
 
 ?>

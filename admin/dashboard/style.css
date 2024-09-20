@@ -16,8 +16,10 @@ body{
 }
 
 .body .container{
-   display: flex;
+   display: grid;
+   grid-template-columns: 2fr 1fr;
    gap: 2em;
+   align-items: start;
    margin: 2em 0;
 }
 
@@ -34,11 +36,12 @@ body{
 }
 
 .stat{
-   background: aliceblue;
+   /* background: aliceblue; */
    border-radius: 1em;
    box-shadow: #00000033 0 10px  10px 0;
    padding: 2em;
    color: var(--l1);
+   flex: 1;
 }
 
 .stat .icon{
@@ -89,17 +92,213 @@ body{
 }
 
 .left .rapport-jour .tableHeader{
-   display: flex;
+   /* display: flex; */
    color: var(--l2);
-   justify-content: space-between;
+   /* justify-content: space-between; */
+   padding: 1em;
+   text-align: left;
 
 }
 
+.table{
+   border-spacing: 0 0.5em;
+   min-width: 100%;
+   
+}
+
+
+
 .table .tableElement{
-   display: flex;
-   justify-content: space-between;
+   /* display: flex; */
+   /* justify-content: space-between; */
    background: var(--d1);
    border-radius: 0.5em;
    color: var(--l1);
    padding: 1em;
+   text-align: left;
+   margin-bottom: 1em;
+
+}
+
+.table :is(td,th){
+   padding: 1em;
+}
+
+.table td:first-child{
+   border-radius:  00.5em 0 0 00.5em;
+
+}
+.table td:last-child{
+   border-radius: 0 00.5em 00.5em 0;
+}
+
+.right > div{
+   background: var(--d2);
+   box-shadow: #00000033 0 10px 10px 0;
+   width: 100%;
+   border-radius: 1em;
+   padding: 2em;
+}
+
+.right{
+   display: grid;
+   gap: 2em;
+   width: 100%;
+}
+
+.right >div .header{
+   color: var(--l1);
+   border-bottom: 1px solid var(--d1);
+   margin-bottom: 2em;
+   padding-bottom: 1em;
+}
+
+.right .mostOrdered .itemsContainer{
+   display: flex;
+   flex-direction: column;
+   gap: 1em;
+}
+
+.right .mostOrdered .item{
+   display: flex;
+   gap: 1em;
+   align-items: center;
+}
+
+.right .mostOrdered .item img{
+   width: 4em;
+   border-radius: 100vmax;
+   aspect-ratio: 1/1;
+   object-fit: cover;
+}
+
+.right .mostOrdered .item .name{
+   color: var(--l1);
+
+}
+
+.right .mostOrdered .item .qty{
+   color: var(--l2);
+}
+
+a.voirTous{
+   display: block;
+   color: var(--b2);
+   text-align: center;
+   padding: 1em;
+   border-radius: 5px;
+   border: 2px solid var(--b2);
+   margin-top: 2em;
+}
+
+.progressContainer {
+   position: relative;
+   --diameter:10em;
+   --width:1.3em;
+   height: var(--diameter);
+   width: var(--diameter);
+}
+
+.progressContainer div{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+   /* background: conic-gradient(red 50deg,blue 0deg); */
+   aspect-ratio: 1/1;
+
+   border-radius: 100vmax;
+}
+
+.progressContainer :is(.start,.finish){
+   left: 0;
+   border-radius: 0px;
+   top: 0;
+   transform: translate(0,0);
+   width: 100%;
+   height: 100%;
+   /* background: red; */
+   /* transform: rotate(180deg); */
+
+}
+
+
+/* .finish{
+   rotate: 180deg;
+} */
+
+.progressContainer :is(.start ,.finish) div{
+   /* width: calc(var(--width)/2);
+   height: var(--width);
+   background: blue;
+   left: 50%;
+   border-radius: 0 calc(var(--width)/2) calc(var(--width)/2) 0; */
+   --half-width: calc(var(--width)/2);
+   --quarter-width: calc(var(--width)/4);
+   top: 0;
+   width: var(--quarter-width);
+   height: var(--half-width);
+   background: blue;
+   left: 50%;
+   border-radius: 0 var(--quarter-width) var(--quarter-width) 0;
+   transform: rotate(0);
+}
+
+.progressContainer .start div{
+   border-radius: var(--quarter-width) 0 0 var(--quarter-width) ;
+   transform: translateX(-100%);
+   
+}
+
+.livraison :is(.start,.finish) div{
+   background: #65B0F6;
+}
+
+.emporter :is(.start,.finish) div{
+   background: #FFB572;
+}
+
+.surplace :is(.start,.finish) div{
+   background: #FF7CA3;
+}
+
+.progressContainer .livraison{
+   width: var(--diameter);
+}
+.progressContainer .emporter{
+   width: calc(var(--diameter) - var(--width));
+}
+
+.progressContainer .surplace{
+   width: calc(var(--diameter) - var(--width) * 2);
+}
+
+.progressContainer .empty{
+   width: calc(var(--diameter) - var(--width) * 3);
+   background: #3a3a3a;
+
+}
+
+.progressContainer .empty2{
+   width: calc(var(--diameter) - var(--width) * 4);
+   background: #333333;
+
+}
+
+.key{
+   color: var(--l1);
+   font-size: 1.3em;
+
+}
+
+.key >div{
+   display: flex;
+   align-items: center;
+   gap: 1em;
+}
+
+.key div div{
+   width: 1em;
+   height: 1em;
+   border-radius: 100vmax;
 }

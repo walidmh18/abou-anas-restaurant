@@ -4,6 +4,7 @@
 <head>
    <?php
    include '../../head.php';
+   include '../../connection.php';
    ?>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,53 +24,195 @@
       </div>
       <div class="container">
          <div class="left">
+            <?php
+
+            function time_elapsed_string($datetime, $full = false)
+            {
+               $now = new DateTime;
+               $ago = new DateTime(("@" . $datetime));
+               $diff = $now->diff($ago);
+
+               $diff->w = floor($diff->d / 7);
+               $diff->d -= $diff->w * 7;
+
+               $string = array(
+                  'y' => 'an',
+                  'm' => 'mois',
+                  'w' => 'semaine',
+                  'd' => 'jour',
+                  'h' => 'heur',
+                  'i' => 'minute',
+                  's' => 'seconde',
+               );
+               foreach ($string as $k => &$v) {
+                  if ($diff->$k) {
+                     $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+                  } else {
+                     unset($string[$k]);
+                  }
+               }
+
+               if (!$full) $string = array_slice($string, 0, 1);
+               return $string ? "Il y'a " . implode(', ', $string) : 'just now';
+            }
+
+            $today = strtotime("today");
+            $sql = "SELECT * FROM `orders` WHERE time >= $today";
+            $res = mysqli_query($con, $sql);
+            // echo '<pre>';
+            // print_r($res);
+            // echo '</pre>';
+            $n_of_orders = $res->num_rows;
+            $totalRevenue = 0;
+            $platsTotal = 0;
+            $types = ['sp' => 0, 'emp' => 0, 'liv' => 0];
+
+
+            while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+               $totalRevenue += $row['total'];
+               $facture = json_decode($row['plats']);
+
+               foreach ($facture as $el) {
+
+                  if ($el->type != 'pack') {
+                     $platsTotal += $el->qty;
+                  } else {
+                     $pack_id = $el->id;
+                     $q = "SELECT * FROM `packs` WHERE id = '$pack_id'";
+                     $r = mysqli_fetch_array(mysqli_query($con, $q), MYSQLI_ASSOC);
+                     foreach (json_decode($r['contents']) as $x => $y) {
+                        $platsTotal += $y;
+                     }
+                  }
+               }
+               // echo $el->type;
+
+               if ($row['type'] == 'livraison') {
+                  $types['liv']++;
+               } else if ($row['type'] == 'sur place') {
+                  $types['sp']++;
+               } else if ($row['type'] == 'emporter') {
+                  $types['emp']++;
+               }
+               
+            }
+
+
+
+            ?>
             <div class="stats">
+
                <div class="stat">
                   <div class="icon"><i class="fa-regular fa-circle-dollar"></i></div>
-                  <h3>10,10010,.112 DZD</h3>
+                  <h3><?= $totalRevenue ?> DZD</h3>
                   <p>total revenue</p>
                </div>
                <div class="stat">
-                  <div class="icon"><i class="fa-sharp fa-regular fa-utensils"></i></div>
-                  <h3>10,10010,.112 DZD</h3>
-                  <p>total revenue</p>
+                  <div class="icon"><i class=" fa-regular fa-utensils"></i></div>
+                  <h3><?= $platsTotal ?></h3>
+                  <p>Nombre des plats</p>
                </div>
                <div class="stat">
                   <div class="icon"><i class="fa-regular fa-list-ul"></i></div>
-                  <h3>10,10010,.112 DZD</h3>
-                  <p>total revenue</p>
+                  <h3><?= $n_of_orders ?></h3>
+                  <p>Commandes totales</p>
                </div>
             </div>
             <div class="rapport-jour">
                <div class="header">
                   <h2>Rapport de jour</h2>
                </div>
-               <div class="tableHeader">
-                  <p>Client</p>
-                  <p>Temps</p>
-                  <p>Articles</p>
-                  <p>Total</p>
-                  <p>statu</p>
-               </div>
-               <div class="table">
-                  <div class="tableElement">
-                     <p class="client">table 1</p>
-                     <p class="temps">il y'a 5 min</p>
-                     <p class="orderSum">items</p>
-                     <p class="total">1000DA</p>
-                     <p class="statu livre">Livrer</p>
 
-                  </div>
-               </div>
+
+               <table class="table">
+                  <tr class="tableHeader">
+                     <th>Client</th>
+                     <th>Temps</th>
+                     <th>Articles</th>
+                     <th>Total</th>
+                     <th>Statu</th>
+                  </tr>
+
+                  <?php
+                  $sql = "SELECT * FROM `orders` WHERE time >= $today";
+                  $response = mysqli_query($con, $sql);
+
+                  while ($item = mysqli_fetch_array($response, MYSQLI_ASSOC)) {
+                  ?>
+                     <tr class="tableElement">
+                        <td class="client"><?= $item['client'] ?></td>
+                        <td class="temps"><?= time_elapsed_string($item['time']) ?></td>
+                        <td class="orderSum"></td>
+                        <td class="total"><?= $item['total'] ?></td>
+                        <td class="statu livrer"><?= $item['status'] ?></td>
+                     </tr>
+                  <?php
+                  }
+
+
+                  ?>
+
+                  <tr class="tableElement">
+                     <td class="temps">it y'a 5min</td>
+                     <td class="client">table 1</td>
+                     <td class="orderSum">items</td>
+                     <td class="total">1000DA</td>
+                     <td class="statu livrer">livrer</td>
+                  </tr>
+
+                  <tr class="tableElement">
+                     <td class="temps">it y'a 5min</td>
+                     <td class="client">table 1</td>
+                     <td class="orderSum">items</td>
+                     <td class="total">1000DA</td>
+                     <td class="statu livrer">livrer</td>
+                  </tr>
+
+                  <tr class="tableElement">
+                     <td class="temps">it y'a 5min</td>
+                     <td class="client">table 1</td>
+                     <td class="orderSum">items</td>
+                     <td class="total">1000DA</td>
+                     <td class="statu livrer">livrer</td>
+                  </tr>
+               </table>
             </div>
          </div>
          <div class="right">
             <div class="mostOrdered">
                <div class="header">
-                  <p>Most Ordered</p>
+                  <h2>Most Ordered</h2>
                </div>
                <div class="itemsContainer">
-                  <div class="item">
+
+                  <?php
+
+
+                  $sqlQ = "SELECT * FROM `plats` ORDER BY times_ordered LIMIT 3";
+                  $aaa = mysqli_query($con, $sqlQ);
+
+                  while ($result = mysqli_fetch_array($aaa, MYSQLI_ASSOC)) {
+                     $img = $result['image_address'];
+                     $name = $result['name_fr'];
+                     $orders = $result['times_ordered'];
+
+                  ?>
+
+                     <div class="item">
+                        <img src="<?= $img ?>" alt="">
+                        <div class="info">
+                           <p class="name"><?= $name ?></p>
+                           <p class="qty"><?= $orders ?> dishes</p>
+
+                        </div>
+                     </div>
+
+                  <?php
+                  }
+
+                  ?>
+
+                  <!-- <div class="item">
                      <img src="../../images/pack.png" alt="">
                      <div class="info">
                         <p class="name">pack</p>
@@ -84,30 +227,67 @@
                         <p class="qty">200 dishes</p>
 
                      </div>
-                  </div>
-                  <div class="item">
-                     <img src="../../images/pack.png" alt="">
-                     <div class="info">
-                        <p class="name">pack</p>
-                        <p class="qty">200 dishes</p>
-
-                     </div>
-                  </div>
+                  </div> -->
                </div>
                <a href="./mostOrdered.php" class="voirTous">Voir tous</a>
             </div>
             <div class="mostType">
                <div class="header">
-                  <p>Most Type of order</p>
+                  <h2>Most Type of order</h2>
                </div>
                <div class="container">
-
+                  <div class="progressContainer">
+                     <div class="livraison" data-progress="20deg" style="background: conic-gradient(#65B0F6 <?= ($types['liv'] / $n_of_orders) * 360 ?>deg,#444444 0deg);">
+                        <div class="start">
+                           <div></div>
+                        </div>
+                        <div class="finish" style="rotate:<?= ($types['liv'] / $n_of_orders) * 360 ?>deg;">
+                           <div></div>
+                        </div>
+                     </div>
+                     <div class="emporter" data-progress="70deg" style="background: conic-gradient(#FFB572 <?= ($types['emp'] / $n_of_orders) * 360 ?>deg,#3a3a3a 0deg);">
+                        <div class="start">
+                           <div></div>
+                        </div>
+                        <div class="finish" style="rotate:<?= ($types['emp'] / $n_of_orders) * 360 ?>deg;">
+                           <div></div>
+                        </div>
+                     </div>
+                     <div class="surplace" data-progress="50deg" style="background: conic-gradient(#FF7CA3 <?= ($types['sp'] / $n_of_orders) * 360 ?>deg,#444444 0deg);">
+                        <div class="start">
+                           <div></div>
+                        </div>
+                        <div class="finish" style="rotate:<?= ($types['sp'] / $n_of_orders) * 360 ?>deg;">
+                           <div></div>
+                        </div>
+                     </div>
+                     <div class="empty"></div>
+                     <div class="empty2"></div>
+                  </div>
+                  <div class="key">
+                     <div>
+                        <div style="background: #FFB572;"></div>
+                        <p>Emporter</p>
+                     </div>
+                     <div>
+                        <div style="background:#65B0F6;"></div>
+                        <p>Livraison</p>
+                     </div>
+                     <div>
+                        <div style="background: #FF7CA3 ;"></div>
+                        <p>A table</p>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
       </div>
 
    </div>
+
+
+
+
 
 </body>
 
