@@ -40,7 +40,7 @@
                   'm' => 'mois',
                   'w' => 'semaine',
                   'd' => 'jour',
-                  'h' => 'heur',
+                  'h' => 'heure',
                   'i' => 'minute',
                   's' => 'seconde',
                );
@@ -94,7 +94,6 @@
                } else if ($row['type'] == 'emporter') {
                   $types['emp']++;
                }
-               
             }
 
 
@@ -130,6 +129,7 @@
                      <th>Temps</th>
                      <th>Articles</th>
                      <th>Total</th>
+                     <th>Type</th>
                      <th>Statu</th>
                   </tr>
 
@@ -142,9 +142,50 @@
                      <tr class="tableElement">
                         <td class="client"><?= $item['client'] ?></td>
                         <td class="temps"><?= time_elapsed_string($item['time']) ?></td>
-                        <td class="orderSum"></td>
-                        <td class="total"><?= $item['total'] ?></td>
-                        <td class="statu livrer"><?= $item['status'] ?></td>
+                        <td class="orderSum">
+
+                           <ul>
+                              <?php
+                              foreach (json_decode($item['plats']) as $i) {
+                                 if ($i->type != 'sandwich') {
+                              ?>
+                                    <li><?= $i->qty ?>* <?= $i->name->fr ?></li>
+                                 <?php
+                                 } else {
+                                    // {"id":"0","type":"sandwich","price":600,"ings":[{"name":"Royal dinde","qty":"4"}],"add":[],"qty":1}
+
+                                 ?>
+                                    <li>
+                                       <?= $i->qty ?> * Sandwich
+                                    </li>
+
+                                    <?php
+
+                                    foreach ($i->ings as $value) {
+                                    ?>
+                                       <li class="ingredient"><?= $value->qty ?> *<?= $value->name ?></li>
+                                    <?php
+                                    }
+
+                                    foreach ($i->add as $value) {
+                                    ?>
+                                       <li class="ingredient"><?= $value ?></li>
+                                    <?php
+                                    }
+
+                                    ?>
+                              <?php
+                                 }
+                              }
+                              ?>
+                           </ul>
+
+                        </td>
+                        <td class="total"><?= $item['total'] ?> DA</td>
+                        <td class="type"><?= $item['type'] ?></td>
+                        <td class="statu">
+                           <p class="<?= $item['status'] ?>"><?= $item['status'] ?></p>
+                        </td>
                      </tr>
                   <?php
                   }
@@ -152,29 +193,6 @@
 
                   ?>
 
-                  <tr class="tableElement">
-                     <td class="temps">it y'a 5min</td>
-                     <td class="client">table 1</td>
-                     <td class="orderSum">items</td>
-                     <td class="total">1000DA</td>
-                     <td class="statu livrer">livrer</td>
-                  </tr>
-
-                  <tr class="tableElement">
-                     <td class="temps">it y'a 5min</td>
-                     <td class="client">table 1</td>
-                     <td class="orderSum">items</td>
-                     <td class="total">1000DA</td>
-                     <td class="statu livrer">livrer</td>
-                  </tr>
-
-                  <tr class="tableElement">
-                     <td class="temps">it y'a 5min</td>
-                     <td class="client">table 1</td>
-                     <td class="orderSum">items</td>
-                     <td class="total">1000DA</td>
-                     <td class="statu livrer">livrer</td>
-                  </tr>
                </table>
             </div>
          </div>

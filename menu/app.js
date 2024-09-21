@@ -939,19 +939,13 @@ plcommande.addEventListener('click', () => {
       client = document.querySelector('.sidePanel.table input[type="number"]').value
       document.querySelector('#clientInp').value = client
    } else if (orderType == 'emporter') {
-      client = `
-         nom: ${document.querySelector('#empNom').value}
-         numero: ${document.querySelector('#empNum').value}
-
-      `
+      client = `nom: ${document.querySelector('#empNom').value} <br>
+tél: ${document.querySelector('#empNum').value}`
       document.querySelector('#clientInp').value = client
    } else if (orderType == 'livraison') {
-      client = `
-         nom: ${document.querySelector('#livName').value}
-         numero: ${document.querySelector('#livNum').value}
-         location: ${document.querySelector('#livLocation').value}
-
-      `
+      client = `nom: ${document.querySelector('#livName').value}<br>
+tél: ${document.querySelector('#livNum').value} <br>
+loc: ${document.querySelector('#livLocation').value}`
       document.querySelector('#clientInp').value = client
    }
 

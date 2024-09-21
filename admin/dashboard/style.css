@@ -84,6 +84,7 @@ body{
    border-radius: 1em;
    padding: 2em;
    box-shadow: #00000033 0 10px 10px 0;
+   /* overflow-x: auto; */
 }
 
 .left .rapport-jour .header{
@@ -103,6 +104,7 @@ body{
 .table{
    border-spacing: 0 0.5em;
    min-width: 100%;
+
    
 }
 
@@ -117,7 +119,8 @@ body{
    padding: 1em;
    text-align: left;
    margin-bottom: 1em;
-
+   vertical-align: top;
+   /* text-wrap: nowrap; */
 }
 
 .table :is(td,th){
@@ -301,4 +304,42 @@ a.voirTous{
    width: 1em;
    height: 1em;
    border-radius: 100vmax;
+}
+
+.ingredient{
+   color: var(--l2);
+   font-size: 0.9em;
+   /* margin-left: 1em; */
+   list-style: circle inside;
+}
+
+ul li{
+   list-style: disc;
+}
+
+td.statu p{
+   padding: 0.5em;
+   border-radius: 100vmax;
+   color: var(--d1);
+   text-align: center;
+}
+
+p.confirmation{
+   background: var(--b2);
+}
+
+p.preparation{
+   background: var(--prep);
+}
+
+p.livre{
+   background: var(--green);
+}
+
+p.complete{
+   background: var(--complete);
+}
+
+p.annule{
+   background: var(--red);
 }

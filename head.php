@@ -23,6 +23,11 @@
    --l-green: #D1E7DD;
    --l-red: #F8D7DA;
 
+   --prep: #9290FE;
+   --complete: #64E9C1;
+   
+
+
 
    --ar-font: 'Alexandria', sans-serif;
    --en-font: 'Nunito Sans', sans-serif;
