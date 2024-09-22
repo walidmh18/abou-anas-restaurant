@@ -53,7 +53,7 @@ $max = isset($_POST['maxId']) ? $_POST['maxId'] : 0;
 
 
 
-$sql = "SELECT * FROM `orders` WHERE time >= $today AND id > '$max'";
+$sql = "SELECT * FROM `orders` WHERE id > '$max' LIMIT 30";
 $response = mysqli_query($con, $sql);
 
 while ($item = mysqli_fetch_array($response, MYSQLI_ASSOC)) {

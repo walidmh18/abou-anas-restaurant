@@ -90,8 +90,8 @@
 
                   <script>
                      $(document).ready(function() {
-                        
-                        
+
+
                         let maxId = 0
 
                         setInterval(() => {
@@ -111,19 +111,20 @@
                                  array[1].forEach(el => {
                                     let order = JSON.parse(el.order);
                                     let out = ''
-                                    function ordear(){
-                                       $.each(order ,function(key,value){
+
+                                    function ordear() {
+                                       $.each(order, function(key, value) {
                                           if (value.type != 'sandwich') {
-                                             out = out.concat(`<li>${value.qty}x ${value.name.fr}</li>`) 
+                                             out = out.concat(`<li>${value.qty}x ${value.name.fr}</li>`)
                                           } else {
-                                             out = out.concat(`<li>${value.qty}x sandwich</li>`) 
-                                             $.each(value.ings, function(a,b){
+                                             out = out.concat(`<li>${value.qty}x sandwich</li>`)
+                                             $.each(value.ings, function(a, b) {
                                                 if (b.qty > 0) {
                                                    out = out.concat(`<li class="ingredient">${b.qty}x ${b.name}</li>`)
-                                                   
+
                                                 }
                                              })
-                                             $.each(value.add, function(a,b){
+                                             $.each(value.add, function(a, b) {
                                                 out = out.concat(`<li class="ingredient">${b}</li>`)
                                              })
                                           }
@@ -142,65 +143,39 @@
                                           <p class="${el.status}" onclick="popup(this.parentElement.parentElement)">${el.status}</p>
                                        </td>
                                     </tr>`);
+
+                                    if (Notification.permission === "granted") {
+                                       // If it's okay let's create a notification
+                                       if (el.status == 'confirmation') {
+                                                var notification = new Notification("Restaurant Abou Anas", {
+                                                   body: 'Vous avez une nouvelle commande!'
+
+                                                });
+                                             }  
+                                    }
+
+                                    // Otherwise, we need to ask the user for permission
+                                    else if (Notification.permission !== "denied") {
+                                       Notification.requestPermission().then(function(permission) {
+                                          // If the user accepts, let's create a notification
+                                          if (permission === "granted") {
+                                             if (el.status == 'confirmation') {
+                                                var notification = new Notification("Restaurant Abou Anas", {
+                                                   body: 'Vous avez une nouvelle commande!'
+
+                                                });
+                                             }
+                                          }
+                                       });
+                                    }
                                  })
                               }
                            })
                         }, 1000);
                      })
-                     // function load(el) {
-                     //    el.forEach(e=>{
-                     //       return ``
-                     //    })
-
-                     // }
-
-                     // $(document).ready(function() {
-                     //    $('#sendMsgBtn').click(function () {
-
-                     //       let msg = $('#msg').val();
-                     //       let queryString = new URLSearchParams(window.location.search);
-                     //       let grp = queryString.get('id');
-
-                     //       $.ajax({
-                     //          type: 'POST',
-                     //          url : '../components/sendMsg.php',
-                     //          data:{
-
-                     //             msg:msg,
-                     //             grp:grp
-                     //          },
-                     //          success:function(){
-                     //             $('#msg').val('');
-                     //          }
-
-                     //       })
-
-                     //    });
-                     //    $('#msg').on('keypress',function(e) {
-                     //       if(e.which == 13) {
-                     //          let msg = $('#msg').val();
-                     //       let queryString = new URLSearchParams(window.location.search);
-                     //       let grp = queryString.get('id');
-
-                     //       $.ajax({
-                     //          type: 'POST',
-                     //          url : '../components/sendMsg.php',
-                     //          data:{
-
-                     //             msg:msg,
-                     //             grp:grp
-                     //          },
-                     //          success:function(){
-                     //             $('#msg').val('');
-                     //          }
-
-                     //       })
-                     //       }
-                     //    });
-                     // })
                   </script>
 
-                 
+
 
                </table>
             </div>
@@ -213,17 +188,17 @@
 
 
 
-<div class="popup">
-   <div class="">
-      <h2>Modifier le Statu?</h2>
+   <div class="popup">
+      <div class="">
+         <h2>Modifier le Statu?</h2>
 
-      <form action="./updateStatus.php" method="POST">
-         <input type="hidden" id="orderId" name="orderId">
-         <button type="submit" name="annuler" class="annuler">annuler la commande</button>
-         <button type="submit" name="avancer">la commande</button>
-      </form>
+         <form action="./updateStatus.php" method="POST">
+            <input type="hidden" id="orderId" name="orderId">
+            <button type="submit" name="annuler" class="annuler">annuler la commande</button>
+            <button type="submit" name="avancer">la commande</button>
+         </form>
+      </div>
    </div>
-</div>
 
 </body>
 

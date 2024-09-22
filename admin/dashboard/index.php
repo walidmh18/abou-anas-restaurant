@@ -206,7 +206,7 @@
                   <?php
 
 
-                  $sqlQ = "SELECT * FROM `plats` ORDER BY times_ordered LIMIT 3";
+                  $sqlQ = "SELECT * FROM `plats` ORDER BY times_ordered DESC LIMIT 3";
                   $aaa = mysqli_query($con, $sqlQ);
 
                   while ($result = mysqli_fetch_array($aaa, MYSQLI_ASSOC)) {

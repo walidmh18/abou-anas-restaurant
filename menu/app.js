@@ -261,9 +261,6 @@ function incr(e) {
 
          }
       }
-
-
-
    }
 
    if (found == false) {
@@ -803,11 +800,7 @@ function delSandwich(e) {
    updateSandwiches()
 
    document.querySelector('#cart' + type + id).remove()
-
-
 }
-
-
 
 function delCartItem(e) {
    // the_cart.splice(indexOf(the_cart))

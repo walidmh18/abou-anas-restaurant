@@ -106,10 +106,10 @@
       <a href="../plats" class="pla"><i class="fa-regular fa-utensils"></i>
          <p>Plats</p>
       </a>
-      <a href="../workers" class="sta"><i class="fa-regular fa-users"></i>
+      <!-- <a href="../workers" class="sta"><i class="fa-regular fa-users"></i>
          <p>Staff</p>
-      </a>
-      <a href="../../"><i class="fa-regular fa-list-ul"></i>
+      </a> -->
+      <a href="../../" target="_blank"><i class="fa-regular fa-list-ul"></i>
          <p>Voir le Menu <i class="fa-solid fa-arrow-up-right-from-square"></i></p>
       </a>
    </div>

@@ -92,7 +92,7 @@ body{
    margin-bottom: 2em;
 }
 
-.left .rapport-jour .tableHeader{
+.tableHeader{
    /* display: flex; */
    color: var(--l2);
    /* justify-content: space-between; */
