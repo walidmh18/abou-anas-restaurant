@@ -1,3 +1,19 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['login'])) {
+   header("Location: ../login?err=3");
+   exit();
+}
+
+
+
+
+
+
+?>
+
+
 <style>
    
    :root{
@@ -51,12 +67,43 @@
    color: var(--b2);
 }
 
+@media screen and (max-width: 1150px) {
+   /* @media screen and (max-width:768px) { */
+   .body{
+      padding: 2em;
+   }
+
+   .body .container, .body .container>div{
+      gap: 1.5em;
+
+   }
+
+}
 
 @media screen and (max-width:1000px) {
    :root{
-      --sideMenuWidth: 25vw;
+      --sideMenuWidth: 20vw;
 
    }
+   body{
+      font-size: 14px;
+   }
+
+   .sideMenu a{
+      padding: 0.7em 1.5em;
+   }
+   
+   
+}
+
+@media screen and (max-width:900px) {
+   .right>div, .stat, .rapport-jour,.sideMenu{
+      padding: 1.4em;
+   }
+   body{
+      font-size: 13px;
+   }
+
    
 }
 
@@ -67,7 +114,7 @@
 
    }
    .body{
-      margin-left: 4em;
+      width: calc(100vw - var(--sideMenuWidth));
    }
    .sideMenu a:has(h2){
       display: none;
@@ -86,6 +133,52 @@
       overflow: hidden;
       width: 0;
       text-wrap: nowrap;
+   }
+   .body .container{
+      grid-template-columns: unset;
+   }
+}
+
+@media screen and (max-width:550px) {
+   body{
+      font-size: 11px;
+   }
+   :root{
+      --sideMenuWidth: 3em;
+
+   }
+    .sideMenu a {
+        font-size: 1.3em;
+    }
+}
+
+@media screen and (max-width:350px) {
+   body{
+      font-size: 10px;
+   }
+}
+
+@media screen and (max-width:200px) {
+   body{
+      font-size: 8px;
+   }
+}
+
+@media screen and (max-width:230px) {
+   body{
+      font-size: 7px;
+   }
+}
+
+@media screen and (max-width:180px) {
+   body{
+      font-size: 6px;
+   }
+}
+
+@media screen and (max-width:100px) {
+   body{
+      font-size: 5px;
    }
 }
 </style>

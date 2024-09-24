@@ -7,7 +7,23 @@ var Swipes = new Swiper('.swiper-container', {
    pagination: {
       el: '.swiper-pagination',
    },
+   breakpoints:{
+      425: {
+         slidesPerView:2,
+      },
+      
+      900: {
+         slidesPerView:3,
+      },
+      1200: {
+         slidesPerView:4
+      },
+      1400: {
+         slidesPerView:5
+      }
+   }
 });
+
 
 
 
@@ -38,7 +54,6 @@ addtocartBtns.forEach(b => {
 
 setInterval(() => {
 
-   // console.log(document.querySelector('.pack input').value)
 }, 1000);
 
 let step = 0
@@ -179,7 +194,6 @@ checkCartBtn.addEventListener('click', () => {
       let total = 0
       step = 3
       the_cart.forEach(el => {
-         console.log(Number(el.price));
          total += el.qty * Number(el.price)
       })
       document.querySelector('input#cartInp').value = JSON.stringify(the_cart)
@@ -224,7 +238,6 @@ function incr(e) {
    if (type == 'pack') {
       id = e.parentElement.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
-      console.log(img);
       contents = '';
       e.parentElement.parentElement.parentElement.parentElement.querySelectorAll('ul li').forEach(lii => {
          contents += `${lii.innerHTML},`
@@ -233,13 +246,11 @@ function incr(e) {
    } else if (type == 'plat') {
       id = e.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
-      console.log(img);
       contents = ''
    } else if (type == 'sandwich') {
       id = e.parentElement.parentElement.parentElement.parentElement.id
       img = ''
       contents = the_cart.find(q => q.id == id && q.type == 'sandwich').ings
-      // console.log(the_cart,id);
    }
    let name = {
       fr: e.parentElement.parentElement.parentElement.querySelector('.fr').innerHTML,
@@ -247,13 +258,10 @@ function incr(e) {
    }
 
    let price = e.parentElement.parentElement.parentElement.querySelector('h2.price').innerHTML
-   console.log(price);
 
-   console.log(name);
    for (let i = 0; i < the_cart.length; i++) {
       if (the_cart[i].id == id && the_cart[i].type == type) {
 
-         console.log(the_cart);
          if (document.querySelector('#cart' + type + the_cart[i].id)) {
             the_cart[i].qty++
             document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML++
@@ -379,13 +387,12 @@ function updateTotal(o) {
       document.querySelector('#totalPrice'),
       document.querySelector('#totalPrice1'),
       document.querySelector('#totalPrice2'),
-      document.querySelector('#totalPrice3')
+      document.querySelector('#totalPrice3'),
+      document.querySelector('#totalPrice4')
    ]
    o.forEach(el => {
-      console.log(Number(el.price));
       total += el.qty * Number(el.price)
    })
-   console.log(total);
    tp.forEach(t => {
       t.innerHTML = total + 'DA'
    })
@@ -406,12 +413,10 @@ function redu(e) {
       type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
 
    }
-   console.log(type);
    if (e.value > 0) {
 
       e.value--
 
-      console.log('#cart' + type + id)
       document.querySelector('#cart' + type + id).querySelector('span.qty').innerHTML--
 
    }
@@ -445,7 +450,6 @@ function redu(e) {
 
    }
 
-   console.log(the_cart);
    updateTotal(the_cart)
 
 }
@@ -522,7 +526,6 @@ const brochettes = [
 
 function updateSandwiches() {
    let sandwiches = sandwichesContainer.querySelectorAll('.sandwich')
-   // sandwich.id = currSandwichesCount
    for (let i = 0; i < sandwiches.length; i++) {
       let sandwich = sandwiches[i]
       sandwich.id = i
@@ -531,7 +534,6 @@ function updateSandwiches() {
    }
 }
 function createSandwich() {
-   // console.log(currSandwichesCount);
    let sandwich = document.createElement('div');
    sandwich.classList.add('sandwich');
    sandwich.setAttribute('data-type', 'sandwich')
@@ -563,7 +565,6 @@ function createSandwich() {
 </div>`
 
 
-   console.log(sandwichContents);
 
 
 
@@ -654,7 +655,6 @@ function createSandwich() {
       qty: 1
 
    }
-   console.log(the_cart);
 
    the_cart.push(obj)
 
@@ -681,7 +681,6 @@ function updateSubtotal(up, tp, qt, p) {
    let unitPrice = up.innerHTML.replace('DA *', '')
    let quantity = qt.value
 
-   console.log(name);
    let subTotal = unitPrice * quantity
 
    tp.innerHTML = subTotal + 'DA'
@@ -689,14 +688,12 @@ function updateSubtotal(up, tp, qt, p) {
 
    let totalPriceContainer = p.querySelector('.sandwichPrice h2')
    let subTotals = [...p.querySelectorAll('p.totalPrice')]
-   console.log(subTotals[0]);
    let totalPrice = 0
    for (let i = 0; i < subTotals.length; i++) {
       let pr = Number(subTotals[i].innerHTML.replace('DA', ''))
       totalPrice += pr
 
    }
-   console.log(totalPrice);
    totalPriceContainer.innerHTML = totalPrice + 'DA'
 
    the_cart.forEach(o => {
@@ -709,7 +706,6 @@ function updateSubtotal(up, tp, qt, p) {
 
          }
 
-         console.log(the_cart);
 
       }
    })
@@ -753,7 +749,6 @@ function toggleGarni(e) {
    let id = e.parentElement.parentElement.id
 
    if (the_cart.find(l => l.id == id && l.type == 'sandwich')) {
-      console.log(e.querySelector('input').checked);
       if (e.querySelector('input').checked) {
          the_cart.find(l => l.id == id && l.type == 'sandwich').add.push(name)
       } else {
@@ -761,7 +756,6 @@ function toggleGarni(e) {
          the_cart.find(l => l.id == id && l.type == 'sandwich').add.splice(nid, 1);
 
       }
-      console.log(the_cart);
    }
    refreshSandwichesInCart()
 
@@ -796,16 +790,13 @@ function delSandwich(e) {
       updateStep()
 
    }
-   console.log(the_cart);
    updateSandwiches()
 
    document.querySelector('#cart' + type + id).remove()
 }
 
 function delCartItem(e) {
-   // the_cart.splice(indexOf(the_cart))
    let type, id
-   console.log(e);
    if (e.classList.contains('plat')) {
       id = e.id
       e.remove()
@@ -826,7 +817,6 @@ function delCartItem(e) {
 
    id = id.replace('cart', '').replace(type, '')
    the_cart.splice(the_cart.indexOf(the_cart.find(u => u.id == id && u.type == type)), 1)
-   console.log(the_cart);
 
    updateTotal(the_cart)
 }
@@ -838,15 +828,12 @@ function reduceQty(e) {
       e.parentElement.parentElement.parentElement.className != 'pack' &&
       e.parentElement.parentElement.parentElement.className != 'sandwich') {
       type = e.parentElement.parentElement.parentElement.parentElement.className
-      console.log(type);
    }
    let elid = e.parentElement.parentElement.parentElement.id || e.parentElement.parentElement.parentElement.parentElement.id
    let id = elid.replace('cart', '').replace(type, '')
-   console.log(type, elid, id);
 
    let inp
 
-   console.log(`.${type}${id} .quantity input[type="number"]`);
 
    if (type != 'sandwich') {
 
@@ -868,18 +855,15 @@ function reduceQty(e) {
 }
 
 function increaseQty(e) {
-   // e.innerHTML++
    updateTotal(the_cart)
 
    let type = e.parentElement.parentElement.parentElement.className
-   console.log(type);
 
    if (e.parentElement.parentElement.parentElement.className != 'plat' && e.parentElement.parentElement.parentElement.className != 'pack' && e.parentElement.parentElement.parentElement.className != 'sandwich') {
       type = e.parentElement.parentElement.parentElement.parentElement.className
    }
    let elid = e.parentElement.parentElement.parentElement.id || e.parentElement.parentElement.parentElement.parentElement.id
    let id = elid.replace('cart', '').replace(type, '')
-   console.log(type, elid, id);
 
 
    let inp

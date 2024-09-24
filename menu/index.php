@@ -13,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" integrity="sha512-Ysw1DcK1P+uYLqprEAzNQJP+J4hTx4t/3X2nbVwszao8wD+9afLjBQYjz7Uk4ADP+Er++mJoScI42ueGtQOzEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css" integrity="sha512-pmAAV1X4Nh5jA9m+jcvwJXFQvCBi3T17aZ1KWkqXr7g/O2YMvO8rfaa5ETWDuBvRq6fbDjlw4jHL44jNTScaKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php include '../head.php'; ?>
+    <link rel="stylesheet" href="./style.css">
 
 </head>
 
@@ -20,10 +21,6 @@
 
 
     <h1 class="pageTitle">Menu</h1>
-
-
-
-
     <div class="category packs">
         <div class="categoryTitle">
             <h2 class="fr">Packs</h2>
@@ -40,18 +37,11 @@
                 $sql = "SELECT * 
     FROM `packs`";
                 $result = mysqli_query($con, $sql);
-                // $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 
 
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 
-                    // echo 'asd';
-                    // echo '<pre>';
-                    // print_r($row);
-                    // echo '</pre>';
-
-                    // echo $row['id'];
 
                     $id = $row['id'];
                     $fr = $row['name_fr'];
@@ -60,11 +50,6 @@
                     $price = $row['price'];
 
                     $contents = json_decode($row['contents']);
-
-                    // foreach ($contents as $x => $y) {
-                    //     echo $x.'='.$y;
-                    // }
-
                 ?>
 
                     <div class="pack pack<?= $id ?> swiper-slide" data-type="pack" id="<?= $id ?>">
@@ -80,7 +65,6 @@
 
                                 <?php 
                                 foreach ($contents as $x => $y) {
-                                    // echo $x.'='.$y;
                                     $query = "SELECT name_fr FROM `plats` WHERE id='$x'";
                                     $res = mysqli_query($con, $query);
                                     while ($el = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
@@ -128,19 +112,10 @@
     FROM `categories`
     ORDER BY tartib asc";
     $result = mysqli_query($con, $sql);
-    // $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 
 
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-
-        // echo 'asd';
-        echo '<pre>';
-        print_r($row);
-        echo '</pre>';
-
-        echo $row['id'];
-
         $id = $row['id'];
         $fr = $row['name_fr'];
         $ar = $row['name_ar'];
@@ -171,9 +146,6 @@
                     $price = $row2['price'];
                     $img = $row2['image_address'];
 
-                    // echo '<pre>';
-                    // print_r($row2);
-                    // echo '</pre>';
                 ?>
 
 
@@ -232,102 +204,10 @@
             </div>
         </div>
         <div class="itemsContainer">
-            <!-- <div class="sandwich ">
-                <div class="top">
-                    <div class="platName">
-                        <h2 class="fr">
-                            Sandwich <span>1</span>
-                        </h2>
-                        <h2 class="ar">
-                            سندويش <span>1</span>
-                        </h2>
-                    </div>
-                    <i class="fa-solid fa-minus" onclick="delSandwich(this.parentElement.parentElement)"></i>
-                </div>
-
-                <div class="contents">
-                    <div class="header">
-                        <p class="fr">Brochettes</p>
-                        <p class="ar">أسياخ</p>
-
-                    </div>
-
-                    <div class="ingredient">
-                        <div class="name">
-                            <p class="fr">Viande</p>
-                            <p class="ar">لحم</p>
-                        </div>
-                        <div class="price">
-                            <p class="unitPrice">60DA *</p>
-                            <div class="quantity">
-
-                                <button onclick="redu(this.nextElementSibling)">
-                                    <i class="fa-regular fa-minus"></i>
-
-                                </button>
-                                <input type="number" value="0" min="0" onblur="corr(this)">
-
-                                <button onclick="incr(this.previousElementSibling)">
-                                    <i class="fa-regular fa-plus"></i>
-                                </button>
-                            </div>
-                            <p class="totalPrice">120DA</p>
-                        </div>
-
-
-                    </div>
-
-                    <div class="ingredient">
-                        <div class="name">
-                            <p class="fr">Viande</p>
-                            <p class="ar">لحم</p>
-                        </div>
-                        <div class="price">
-                            <p class="unitPrice">60DA *</p>
-                            <div class="quantity">
-
-                                <button onclick="redu(this.nextElementSibling)">
-                                    <i class="fa-regular fa-minus"></i>
-
-                                </button>
-                                <input type="number" value="0" min="0" onblur="corr(this)">
-
-                                <button onclick="incr(this.previousElementSibling)">
-                                    <i class="fa-regular fa-plus"></i>
-                                </button>
-                            </div>
-                            <p class="totalPrice">120DA</p>
-                        </div>
-
-
-                    </div>
-
-                    
-                    
-
-
-                    <div class="header">
-                        <p class="fr">Garnitures</p>
-                        <p class="ar">اضافات</p>
-
-                    </div>
-
-                    <div class="ingredient">
-                        <div class="name">
-                            <div class="fr">Frittes</div>
-                            <div class="ar">بطاطا</div>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 
-    <div class="sidePanel cart">
+    <div class="sidePanel cart ">
         <div>
             <h1 class="pageTitle">Panier</h1>
         </div>
@@ -401,7 +281,7 @@
             </div>
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice1">1200DA</span></h2>
+            <h2>Total: <span id="totalPrice4">0DA</span></h2>
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<>
+<head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Categories</title>
@@ -16,6 +16,8 @@
          background: var(--d2);
          padding: 2em;
          border-radius: 2em;
+         width: 100%;
+         max-width: unset;
       }
 
       .table {
@@ -45,7 +47,7 @@
          vertical-align: middle;
       }
    </style>
-</>
+</head>
 
 <body>
 
@@ -54,49 +56,49 @@
 
       <div class="title">
          <h1>Categories</h1>
-         <div class="tableContainer">
-
-            <button onclick="popupp('')" class="addCategory">Ajouter une Categorie </button>
-
-            <table class="table">
-               <tr class="tableHeader">
-                  <th>Nom FR</th>
-                  <th>Nom AR</th>
-                  <th>Nombre de plats</th>
-                  <td></td>
-               </tr>
-
-               <?php
-               $sql = "SELECT * FROM categories";
-               $query = mysqli_query($con, $sql);
-               while ($row = mysqli_fetch_assoc($query)) {
-                  $id = $row['id'];
-
-                  $sql2 = "SELECT * FROM `plats` WHERE category = '$id'";
-                  $response = mysqli_query($con,$sql2);
-                  $num_plats = mysqli_num_rows($response);
-               ?>
-
-                  <tr class="tableElement" id="<?= $row['id'] ?>">
-                     <td class="fr"><?= $row['name_fr'] ?></td>
-                     <td class="ar"><?= $row['name_ar'] ?></td>
-                     <td><?= $num_plats ?></td>
-                     <td><button onclick="popupp(this.parentElement.parentElement.id)" class="editCategory">Modifier</button></td>
-                  </tr>
-               <?php
-               }
-
-               ?>
-
-
-            </table>
-         </div>
       </div>
+      <div class="tableContainer">
+
+         <button onclick="popupp('')" class="addCategory">Ajouter une Categorie </button>
+         <table class="table">
+            <tr class="tableHeader">
+               <th>Nom FR</th>
+               <th>Nom AR</th>
+               <th>Nombre de plats</th>
+               <td></td>
+            </tr>
+
+            <?php
+            $sql = "SELECT * FROM categories";
+            $query = mysqli_query($con, $sql);
+            while ($row = mysqli_fetch_assoc($query)) {
+               $id = $row['id'];
+
+               $sql2 = "SELECT * FROM `plats` WHERE category = '$id'";
+               $response = mysqli_query($con, $sql2);
+               $num_plats = mysqli_num_rows($response);
+            ?>
+
+               <tr class="tableElement" id="<?= $row['id'] ?>">
+                  <td class="fr"><?= $row['name_fr'] ?></td>
+                  <td class="ar"><?= $row['name_ar'] ?></td>
+                  <td><?= $num_plats ?></td>
+                  <td><button onclick="popupp(this.parentElement.parentElement.id)" class="editCategory">Modifier</button></td>
+               </tr>
+            <?php
+            }
+
+            ?>
+
+
+         </table>
 
 
 
 
 
+
+      </div>
    </div>
 
    <div class="popup">
@@ -130,16 +132,16 @@
    <script>
       const popupElement = document.querySelector('.popup')
 
-      function popupp(e){
-console.log(e);
-popupEl.style.display = 'grid'
-popupEl.querySelector('#idInp').value = e
-popupEl.querySelector('#nomFr').value = document.getElementById(e).querySelector(`.fr`).innerHTML
-popupEl.querySelector('#nomAr').value = document.getElementById(e).querySelector(`.ar`).innerHTML
-console.log(document.getElementById(e).querySelector(`.ar`).innerHTML);
+      function popupp(e) {
+         console.log(e);
+         popupEl.style.display = 'grid'
+         popupEl.querySelector('#idInp').value = e
+         popupEl.querySelector('#nomFr').value = document.getElementById(e).querySelector(`.fr`).innerHTML
+         popupEl.querySelector('#nomAr').value = document.getElementById(e).querySelector(`.ar`).innerHTML
+         console.log(document.getElementById(e).querySelector(`.ar`).innerHTML);
 
 
-}
+      }
    </script>
 
 </body>

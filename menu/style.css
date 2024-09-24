@@ -119,7 +119,7 @@ button.addtocart.active {
 
 .itemsContainer {
    display: grid;
-   grid-template-columns: repeat(1, 1fr);
+   grid-template-columns: repeat(auto-fit,minmax(30em,1fr));
    gap: 2em;
    margin-top: 3em;
 
@@ -158,15 +158,27 @@ button.addtocart.active {
 
 
 .plat .img {
-   height: 80%;
+   height: 70%;
    position: absolute;
-   right: -15%;
+   right: -3em;
    top: 50%;
    transform: translateY(-50%);
 }
 
+
+@media screen and (min-width:425px) {
+   
+   .plat .img{
+      right: 1em;
+      height: 60%;
+   }
+}
+
 .plat .img img {
    height: 100%;
+   aspect-ratio: 1/1;
+   object-fit: cover;
+   border-radius: 100vmax;
 }
 
 .plat .bottom {
@@ -213,13 +225,12 @@ button.addtocart.active {
    gap: 1em;
    position: fixed;
    bottom: 0;
-   left: 0;
+   right: 0;
    padding: 0 2em 6em;
    z-index: 100;
 }
 
 .actionBtns div>button {
-   /* width: 100%; */
    display: none;
    transition: 0.3s;
 }
@@ -235,8 +246,6 @@ button.addtocart.active {
 }
 
 .actionBtns>button {
-   /* height: 3em;
-   width: 3em; */
    padding: 1em;
    display: block;
    text-align: center;
@@ -660,4 +669,53 @@ button.checkCartBtn {
 
 #CartForm{
    display: none;
+}
+
+@media screen and (min-width:450px) {
+   body{
+      font-size: 9px;
+   }
+}
+
+@media screen and (min-width:625px) {
+   body{
+      font-size: 10px;
+   }
+}
+
+
+@media screen and (min-width: 768px) {
+   :root{
+      --rmenu-width: 30vw;
+   }
+   body{
+      font-size: 9px;
+      margin-right: var(--rmenu-width);
+
+   }
+
+   .sidePanel {
+      width: var(--rmenu-width);
+      box-shadow: 0 0 10px 0 #0000002E;
+      font-size: 8px;
+   }
+
+   .sidePanel.cart{
+      right: 0;
+   }
+
+   .actionBtns{
+      width: var(--rmenu-width);
+      font-size: 8px;
+      
+   }
+   .categoryTitle{
+      flex-direction: column;
+      align-items: start;
+   }
+
+   .categoryTitle div {
+      width: 100px;
+   }
+
 }

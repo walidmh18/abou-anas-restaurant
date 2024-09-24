@@ -8,8 +8,9 @@ body{
 
 .platsContainer{
    /* --p:3em; */
+   margin-top: 3em;
    background: var(--d2);
-   border-radius: 2em;
+   border-radius: 1em;
    box-shadow: #00000033 0px 10px 10px 0;
    /* padding: var(--p); */
    /* height: 100%; */
@@ -87,8 +88,8 @@ a.manageCategories{
 .categoriesShow{
    overflow: auto;
    display: grid;
-   grid-template-columns: repeat(4,1fr);
-   gap: 2em;
+   grid-template-columns: repeat(auto-fill , minmax(15em,1fr));
+   gap: 1.7em;
    padding: 3em;
    display: none;
 
@@ -132,6 +133,7 @@ a.manageCategories{
    display: grid;
    place-items: center;
    cursor: pointer;
+   min-height: 200px;
 }
 .categoriesShow .addPlat *{
    font-size: 3em;
@@ -265,3 +267,16 @@ a.manageCategories{
    opacity: 0.5;
    display: grid;place-items: center;
 }
+
+
+@media screen and (max-width:768px) {
+.categoriesShow{
+   padding: 2em;
+}
+}
+
+@media screen and (max-width:500px) {
+   .categoriesShow{
+      padding: 1em;
+   }
+   }

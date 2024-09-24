@@ -75,63 +75,64 @@
             <div class="rapport-jour">
 
 
+               <div class="tableContainer">
 
-               <table class="table" id="ordersTable">
-                  <tr class="tableHeader" id="tableHeader">
-                     <th>Client</th>
-                     <th>Temps</th>
-                     <th>Articles</th>
-                     <th>Total</th>
-                     <th>Type</th>
-                     <th>Statu</th>
-                  </tr>
+                  <table class="table" id="ordersTable">
+                     <tr class="tableHeader" id="tableHeader">
+                        <th>Client</th>
+                        <th>Temps</th>
+                        <th>Articles</th>
+                        <th>Total</th>
+                        <th>Type</th>
+                        <th>Statu</th>
+                     </tr>
 
-                  <section id="test"></section>
+                     <section id="test"></section>
 
-                  <script>
-                     $(document).ready(function() {
+                     <script>
+                        $(document).ready(function() {
 
 
-                        let maxId = 0
+                           let maxId = 0
 
-                        setInterval(() => {
-                           // console.log(a)
-                           $.ajax({
-                              type: 'POST',
-                              url: './getOrders.php',
-                              data: {
-                                 // grp:grp,
-                                 maxId: maxId
+                           setInterval(() => {
+                              // console.log(a)
+                              $.ajax({
+                                 type: 'POST',
+                                 url: './getOrders.php',
+                                 data: {
+                                    // grp:grp,
+                                    maxId: maxId
 
-                              },
-                              dataType: 'html',
-                              success: function(data) {
-                                 let array = JSON.parse(data)
-                                 maxId = array[0]
-                                 array[1].forEach(el => {
-                                    let order = JSON.parse(el.order);
-                                    let out = ''
+                                 },
+                                 dataType: 'html',
+                                 success: function(data) {
+                                    let array = JSON.parse(data)
+                                    maxId = array[0]
+                                    array[1].forEach(el => {
+                                       let order = JSON.parse(el.order);
+                                       let out = ''
 
-                                    function ordear() {
-                                       $.each(order, function(key, value) {
-                                          if (value.type != 'sandwich') {
-                                             out = out.concat(`<li>${value.qty}x ${value.name.fr}</li>`)
-                                          } else {
-                                             out = out.concat(`<li>${value.qty}x sandwich</li>`)
-                                             $.each(value.ings, function(a, b) {
-                                                if (b.qty > 0) {
-                                                   out = out.concat(`<li class="ingredient">${b.qty}x ${b.name}</li>`)
+                                       function ordear() {
+                                          $.each(order, function(key, value) {
+                                             if (value.type != 'sandwich') {
+                                                out = out.concat(`<li>${value.qty}x ${value.name.fr}</li>`)
+                                             } else {
+                                                out = out.concat(`<li>${value.qty}x sandwich</li>`)
+                                                $.each(value.ings, function(a, b) {
+                                                   if (b.qty > 0) {
+                                                      out = out.concat(`<li class="ingredient">${b.qty}x ${b.name}</li>`)
 
-                                                }
-                                             })
-                                             $.each(value.add, function(a, b) {
-                                                out = out.concat(`<li class="ingredient">${b}</li>`)
-                                             })
-                                          }
-                                       })
-                                       return out;
-                                    }
-                                    $('#tableHeader').after(`<tr id="${el.id}" class="tableElement">
+                                                   }
+                                                })
+                                                $.each(value.add, function(a, b) {
+                                                   out = out.concat(`<li class="ingredient">${b}</li>`)
+                                                })
+                                             }
+                                          })
+                                          return out;
+                                       }
+                                       $('#tableHeader').after(`<tr id="${el.id}" class="tableElement">
                                        <td class="client">${el.client}</td>
                                        <td class="temps">${el.time}</td>
                                        <td class="orderSum">
@@ -144,40 +145,41 @@
                                        </td>
                                     </tr>`);
 
-                                    if (Notification.permission === "granted") {
-                                       // If it's okay let's create a notification
-                                       if (el.status == 'confirmation') {
-                                                var notification = new Notification("Restaurant Abou Anas", {
-                                                   body: 'Vous avez une nouvelle commande!'
+                                       if (Notification.permission === "granted") {
+                                          // If it's okay let's create a notification
+                                          if (el.status == 'confirmation') {
+                                             var notification = new Notification("Restaurant Abou Anas", {
+                                                body: 'Vous avez une nouvelle commande!'
 
-                                                });
-                                             }  
-                                    }
-
-                                    // Otherwise, we need to ask the user for permission
-                                    else if (Notification.permission !== "denied") {
-                                       Notification.requestPermission().then(function(permission) {
-                                          // If the user accepts, let's create a notification
-                                          if (permission === "granted") {
-                                             if (el.status == 'confirmation') {
-                                                var notification = new Notification("Restaurant Abou Anas", {
-                                                   body: 'Vous avez une nouvelle commande!'
-
-                                                });
-                                             }
+                                             });
                                           }
-                                       });
-                                    }
-                                 })
-                              }
-                           })
-                        }, 1000);
-                     })
-                  </script>
+                                       }
+
+                                       // Otherwise, we need to ask the user for permission
+                                       else if (Notification.permission !== "denied") {
+                                          Notification.requestPermission().then(function(permission) {
+                                             // If the user accepts, let's create a notification
+                                             if (permission === "granted") {
+                                                if (el.status == 'confirmation') {
+                                                   var notification = new Notification("Restaurant Abou Anas", {
+                                                      body: 'Vous avez une nouvelle commande!'
+
+                                                   });
+                                                }
+                                             }
+                                          });
+                                       }
+                                    })
+                                 }
+                              })
+                           }, 1000);
+                        })
+                     </script>
 
 
 
-               </table>
+                  </table>
+               </div>
             </div>
          </div>
 
@@ -195,7 +197,7 @@
          <form action="./updateStatus.php" method="POST">
             <input type="hidden" id="orderId" name="orderId">
             <button type="submit" name="annuler" class="annuler">annuler la commande</button>
-            <button type="submit" name="avancer">la commande</button>
+            <button type="submit" name="avancer">Modifier</button>
          </form>
       </div>
    </div>

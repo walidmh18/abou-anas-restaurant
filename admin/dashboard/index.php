@@ -122,10 +122,10 @@
                   <h2>Rapport de jour</h2>
                </div>
 
-
-               <table class="table">
+<div class="tableContainer">
+   
+<table class="table">
                   <tr class="tableHeader">
-                     <th>Client</th>
                      <th>Temps</th>
                      <th>Articles</th>
                      <th>Total</th>
@@ -140,7 +140,6 @@
                   while ($item = mysqli_fetch_array($response, MYSQLI_ASSOC)) {
                   ?>
                      <tr class="tableElement">
-                        <td class="client"><?= $item['client'] ?></td>
                         <td class="temps"><?= time_elapsed_string($item['time']) ?></td>
                         <td class="orderSum">
 
@@ -194,6 +193,7 @@
                   ?>
 
                </table>
+</div>
             </div>
          </div>
          <div class="right">
