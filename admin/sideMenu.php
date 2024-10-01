@@ -199,9 +199,9 @@ if (!isset($_SESSION['login'])) {
       <a href="../plats" class="pla"><i class="fa-regular fa-utensils"></i>
          <p>Plats</p>
       </a>
-      <!-- <a href="../workers" class="sta"><i class="fa-regular fa-users"></i>
-         <p>Staff</p>
-      </a> -->
+      <a href="../packs" class="pac"><i class="fa-regular fa-burger-soda"></i>
+         <p>Packs</p>
+      </a>
       <a href="../../" target="_blank"><i class="fa-regular fa-list-ul"></i>
          <p>Voir le Menu <i class="fa-solid fa-arrow-up-right-from-square"></i></p>
       </a>

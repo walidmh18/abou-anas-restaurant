@@ -24,6 +24,7 @@ function closePopup(){
    popupEl.querySelector('#nomFr').value = ''
    popupEl.querySelector('#nomAr').value = ''
    popupEl.querySelector('#prix').value = ''
+
 }
 
 
@@ -43,3 +44,8 @@ function showPlats(e){
    e.classList.add('active')
    console.log(id);  
 }
+
+setInterval(() => {
+   console.log('12314');
+   console.log('12315');
+}, 100);

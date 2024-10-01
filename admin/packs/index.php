@@ -4,16 +4,15 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Plats</title>
+   <title>Packs</title>
    <?php include '../../connection.php' ?>
    <?php include '../../head.php' ?>
 
    <link rel="stylesheet" href="../dashboard/style.css">
    <link rel="stylesheet" href="./style.css">
 
-
    <style>
-      .sideMenu .pla{
+      .sideMenu .pac{
          background:var(--d1);
       }
    </style>
@@ -25,36 +24,14 @@
    <div class="body">
 
       <div class="title">
-         <h1>Plats</h1>
-
-
+         <h1>Packs</h1>
       </div>
+
 
 
       <div class="platsContainer">
          <div class="top">
-            <a href="./categories.php" class="manageCategories"><i class="fa-regular fa-sliders-simple"></i> Gérer les catégories</a>
-            <div class="categoriesMenu">
 
-               <div class="category active" onclick="showPlats(this)">Tous</div>
-
-
-               <?php
-
-
-               $sql = "SELECT * FROM `categories`";
-               $res = mysqli_query($con, $sql);
-               while ($row = mysqli_fetch_assoc($res)) {
-               ?>
-                  <div class="category" onclick="showPlats(this)" id="category<?= $row['id'] ?>"><?= $row['name_fr'] ?></div>
-               <?php
-               }
-
-
-               ?>
-
-
-            </div>
          </div>
 
          <div class="categoriesShow Tous">
@@ -63,7 +40,7 @@
             </div>
 
             <?php
-            $sql = "SELECT * FROM `plats`";
+            $sql = "SELECT * FROM `packs`";
             $res = mysqli_query($con, $sql);
 
             while ($row = mysqli_fetch_assoc($res)) {
@@ -74,19 +51,21 @@
                   <p class="fr"><?= $row['name_fr'] ?></p>
                   <p class="ar"><?= $row['name_ar'] ?></p>
                   <p class="price"><?= $row['price'] ?></p>
+
+                  <ul>
+               <li>a</li>
+               <li>asdf</li>
+               <li>adsfasd</li>
+            </ul>
                   <button onclick="popup(this.parentElement.id)" class="y-button">Modifier</button>
+                  
                </div>
 
             <?php
             }
             ?>
-            <!-- <div class="plat">
-               <img src="../../images/plat1.png" alt="">
-               <p class="fr">name</p>
-               <p class="ar">الاسم</p>
-               <p class="price">1200DA</p>
-               <button onclick="popup(this)" class="y-button">Modifier</button>
-            </div> -->
+            
+            
          </div>
 
          <?php
@@ -148,7 +127,7 @@
    </div>
    <div class="popup">
       <div class="container">
-         <form action="./addPlat.php" method="POST" enctype="multipart/form-data">
+         <form action="./addPack.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="id" id="idInp">
 
             <label for="image" id="imageUpload">
@@ -172,32 +151,43 @@
                <input type="text" name="prix" id="prix">
             </div>
 
-            <div class="inp">
-               <label for="CategoryInp">categorie</label>
-               <select name="categoryInp" id="categoryInp">
-                  <option value="1" selected hidden>choisir une categorie</option>
-                  <?php
+            <p>les contenus</p>
 
-                  $sql = "SELECT * FROM `categories`";
-                  $res = mysqli_query($con, $sql);
-                  while ($row = mysqli_fetch_assoc($res)) {
-                  ?>
-                     <option value="<?= $row['id'] ?>"><?= $row['name_fr'] ?></option>
-
-
-
-                  <?php
-                  }
-
-                  ?>
-
-               </select>
+            <div class="con">
+               <p class="dkfjkdjfd">plat</p>
+               <p>quantité</p>
+               <button class="addCon" onclick="addCon()" type="button"><i class="fa-plus fa-solid"></i></button>
             </div>
+
+            <div class="con acon">
+               <select name="asdf" id="asdf">
+                  <option selected hidden value="" oninput="setContents()">Plat ...</option>
+                  <?php
+                  $query = "SELECT * FROM `plats`";
+                  $qq = mysqli_query($con,$query);
+
+                  while($rr = mysqli_fetch_assoc($qq)){
+                     ?> 
+                     <option value="<?= $rr['id'] ?>"><?= $rr['name_fr'] ?></option>
+                     
+                     <?php
+                  }
+                  ?>
+               </select>
+               <input type="number" class="qtyInp" oninput="setContents()">
+
+            </div>
+
+            
             <div class="buttons">
                <button class="cancel" type="button" onclick="closePopup()">Annuler</button>
                <button class="delete" type="submit" name="delete">Suprimer</button>
-               <button class="save" type="submit" name="save">Enregistrer</button>
+               <button class="save" type="submit" name="save" onclick="setContents()">Enregistrer</button>
             </div>
+
+            <input type="hidden" name="contents" id="contents" >
+
+            
 
          </form>
       </div>

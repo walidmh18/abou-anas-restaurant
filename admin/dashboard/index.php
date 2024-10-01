@@ -10,6 +10,11 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Tableau de bord</title>
    <link rel="stylesheet" href="./style.css">
+   <style>
+      .sideMenu .tdb{
+         background:var(--d1);
+      }
+   </style>
 </head>
 
 <body>

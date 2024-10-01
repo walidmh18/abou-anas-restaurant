@@ -674,13 +674,17 @@ button.checkCartBtn {
 @media screen and (min-width:450px) {
    body{
       font-size: 9px;
+      padding: 3em;
    }
 }
 
 @media screen and (min-width:625px) {
    body{
       font-size: 10px;
+      padding: 4em;
+
    }
+   
 }
 
 
@@ -690,6 +694,7 @@ button.checkCartBtn {
    }
    body{
       font-size: 9px;
+      padding: 5em;
       margin-right: var(--rmenu-width);
 
    }

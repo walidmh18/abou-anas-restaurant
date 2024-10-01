@@ -64,17 +64,20 @@
                                 
 
                                 <?php 
-                                foreach ($contents as $x => $y) {
-                                    $query = "SELECT name_fr FROM `plats` WHERE id='$x'";
-                                    $res = mysqli_query($con, $query);
-                                    while ($el = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
-                                        
+                                foreach($contents as $t){
                                     
+                                    
+                                    foreach ($t as $x => $y) {
+                                        $query = "SELECT name_fr FROM `plats` WHERE id='$x'";
+                                        $res = mysqli_query($con, $query);
+                                        while ($el = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
+                                            
+                                        
 
                                 ?>
-                                <li><?= $y.'* '.$el['name_fr'] ?></li>
+                                <li><?= $y.'* '.$el['name_fr']; ?></li>
                                 
-                                <?php }} 
+                                <?php }}}
                                 ?>
                             </ul>
 
