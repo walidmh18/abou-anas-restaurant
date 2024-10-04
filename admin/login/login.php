@@ -8,11 +8,8 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
    $password = $_POST['password'];
    $sql = "SELECT * FROM `workers` WHERE login = '$login'";
    $r = mysqli_query($con,$sql);
-   echo '<pre>';
-   print_r($r);
-   echo '</pre>';
 
-   // echo $r->num_rows;
+
 
    if ($r->num_rows == 1) {
       if (mysqli_fetch_assoc($r)['password'] == $password) {

@@ -1,9 +1,14 @@
-<?php session_start(); ?>
+<?php session_start();
+if (!isset($_SESSION['login'])) {
+header("Location: ../login?err=3");
+   exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-   <?php
+<?php
    include '../../head.php';
    include '../../connection.php';
    ?>
@@ -19,9 +24,7 @@
 </head>
 
 <body>
-
-
-   <?php include '../sideMenu.php'; ?>
+<?php include '../sideMenu.php'; ?>
 
    <div class="body">
       <div class="title">
@@ -65,9 +68,6 @@
             $today = strtotime("today");
             $sql = "SELECT * FROM `orders` WHERE time >= $today";
             $res = mysqli_query($con, $sql);
-            // echo '<pre>';
-            // print_r($res);
-            // echo '</pre>';
             $n_of_orders = $res->num_rows;
             $totalRevenue = 0;
             $platsTotal = 0;
@@ -91,7 +91,6 @@
                      }
                   }
                }
-               // echo $el->type;
 
                if ($row['type'] == 'livraison') {
                   $types['liv']++;

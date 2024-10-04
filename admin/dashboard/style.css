@@ -38,7 +38,6 @@ body{
 }
 
 .stat{
-   /* background: aliceblue; */
    border-radius: 1em;
    box-shadow: #00000033 0 10px  10px 0;
    padding: 2em;
@@ -88,7 +87,6 @@ body{
    border-radius: 1em;
    padding: 2em;
    box-shadow: #00000033 0 10px 10px 0;
-   /* overflow-x: auto; */
 }
 
 .left .rapport-jour .header{
@@ -97,9 +95,7 @@ body{
 }
 
 .tableHeader{
-   /* display: flex; */
    color: var(--l2);
-   /* justify-content: space-between; */
    padding: 1em;
    text-align: left;
 
@@ -118,8 +114,6 @@ body{
 }
 
 .table .tableElement{
-   /* display: flex; */
-   /* justify-content: space-between; */
    background: var(--d1);
    border-radius: 0.5em;
    color: var(--l1);
@@ -127,7 +121,6 @@ body{
    text-align: left;
    margin-bottom: 1em;
    vertical-align: top;
-   /* text-wrap: nowrap; */
 }
 
 .table :is(td,th){
@@ -214,7 +207,6 @@ a.voirTous{
    top: 50%;
    left: 50%;
    transform: translate(-50%,-50%);
-   /* background: conic-gradient(red 50deg,blue 0deg); */
    aspect-ratio: 1/1;
 
    border-radius: 100vmax;
@@ -227,22 +219,15 @@ a.voirTous{
    transform: translate(0,0);
    width: 100%;
    height: 100%;
-   /* background: red; */
-   /* transform: rotate(180deg); */
+
 
 }
 
 
-/* .finish{
-   rotate: 180deg;
-} */
+
 
 .progressContainer :is(.start ,.finish) div{
-   /* width: calc(var(--width)/2);
-   height: var(--width);
-   background: blue;
-   left: 50%;
-   border-radius: 0 calc(var(--width)/2) calc(var(--width)/2) 0; */
+   
    --half-width: calc(var(--width)/2);
    --quarter-width: calc(var(--width)/4);
    top: 0;
@@ -316,7 +301,6 @@ a.voirTous{
 .ingredient{
    color: var(--l2);
    font-size: 0.9em;
-   /* margin-left: 1em; */
    list-style: circle inside;
 }
 

@@ -7,7 +7,7 @@ if (isset($_POST['avancer'])) {
    $sql = "SELECT status FROM `orders` WHERE id = '$id'";
    $query = mysqli_query($con, $sql);
    $status = mysqli_fetch_assoc($query)['status'];
-   echo $status;
+
 
 
    if ($status == 'confirmation') {

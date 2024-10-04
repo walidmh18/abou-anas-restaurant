@@ -37,11 +37,7 @@ document.querySelectorAll('.con input,.con select').forEach(e => {
 }
 )
 
-// setInterval(() => {
 
-//    setContents()
-
-// }, 1000);
 let arr = []
 
 
@@ -54,13 +50,11 @@ function setContents() {
    let con = document.querySelectorAll('.popup .acon');
    let contentsInp = document.querySelector('#contents');
    console.log(con);
-   // console.log(con);
    con.forEach(c => {
       console.log(c);
       let p = c.querySelector('select').value;
       let q = c.querySelector('input[type="number"]').value;
       console.log(p, q);
-      // p.toString()   
       let obj = { [p]: q }
       if(!Object.keys(obj).includes('') && !Object.values(obj).includes('')){
          arr[p]= obj;
@@ -70,7 +64,6 @@ function setContents() {
    });
    contentsInp.value = JSON.stringify(arr.filter(n=>n));
    console.log(contentsInp);
-   // document.querySelector('form').submit();
 }
 
 

@@ -2,24 +2,24 @@ var Swipes = new Swiper('.swiper-container', {
    loop: true,
    slidesPerView: 1,
    spaceBetween: 10,
-   autoplay: false,
+   autoplay: true,
    loop: false,
    pagination: {
       el: '.swiper-pagination',
    },
-   breakpoints:{
+   breakpoints: {
       425: {
-         slidesPerView:2,
+         slidesPerView: 2,
       },
-      
+
       900: {
-         slidesPerView:3,
+         slidesPerView: 3,
       },
       1200: {
-         slidesPerView:4
+         slidesPerView: 4
       },
       1400: {
-         slidesPerView:5
+         slidesPerView: 5
       }
    }
 });
@@ -214,14 +214,6 @@ checkBtn.addEventListener('click', () => {
 
 
 
-function redu(e) {
-   if (e.value > 0) {
-      e.value--
-
-   }
-   e.focus()
-
-}
 
 
 const sideCartContainer = cart.querySelector('.itemsContainer')
@@ -242,7 +234,7 @@ function incr(e) {
       e.parentElement.parentElement.parentElement.parentElement.querySelectorAll('ul li').forEach(lii => {
          contents += `${lii.innerHTML},`
       });
-      contents = contents.slice(0,-1);
+      contents = contents.slice(0, -1);
    } else if (type == 'plat') {
       id = e.parentElement.parentElement.parentElement.id
       img = e.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
@@ -392,6 +384,9 @@ function updateTotal(o) {
    ]
    o.forEach(el => {
       total += el.qty * Number(el.price)
+      if (el.qty == 0) {
+         o.splice(o.indexOf(el),1);
+      }
    })
    tp.forEach(t => {
       t.innerHTML = total + 'DA'
@@ -454,15 +449,59 @@ function redu(e) {
 
 }
 function corr(e) {
+   let type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
+   let img, contents, id
+
+   if (type == 'pack') {
+      id = e.parentElement.parentElement.parentElement.parentElement.id
+      img = e.parentElement.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
+      contents = '';
+      e.parentElement.parentElement.parentElement.parentElement.querySelectorAll('ul li').forEach(lii => {
+         contents += `${lii.innerHTML},`
+      });
+      contents = contents.slice(0, -1);
+   } else if (type == 'plat') {
+      id = e.parentElement.parentElement.parentElement.id
+      img = e.parentElement.parentElement.parentElement.querySelector('img').getAttribute('src')
+      contents = ''
+   } else if (type == 'sandwich') {
+      id = e.parentElement.parentElement.parentElement.parentElement.id
+      img = ''
+      contents = the_cart.find(q => q.id == id && q.type == 'sandwich').ings
+   }
+
+
+   
+   for (let i = 0; i < the_cart.length; i++) {
+      if (the_cart[i].id == id && the_cart[i].type == type) {
+
+         if (document.querySelector('#cart' + type + the_cart[i].id)) {
+            the_cart[i].qty = e.value
+            document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML = e.value
+            
+
+         }
+      }
+   }
    if (e.value <= 0) {
       e.value = 0
    }
 
    if (e.value == 0) {
-      e.parentElement.classList.remove('active')
-      e.parentElement.parentElement.querySelector('.addtocart').classList.add('active')
+
+
+      if (type == 'sandwich') {
+         delSandwich(e.parentElement.parentElement.parentElement.parentElement)
+      } else {
+         e.parentElement.parentElement.querySelector('.addtocart').classList.add('active')
+         e.parentElement.classList.remove('active')
+
+      }
+      document.querySelector('#cart' + type + id).remove()
+
    }
 
+updateTotal(the_cart)
 }
 
 
@@ -587,7 +626,7 @@ function createSandwich() {
          <i class="fa-regular fa-minus"></i>
 
       </button>
-      <input type="number" value="0" min="0" onblur="corr(this)">
+      <input type="number" value="0" min="0" onblur="corr(this);updateSubtotal(this.parentElement.previousElementSibling,this.parentElement.nextElementSibling,this,this.parentElement.parentElement.parentElement.parentElement);">
 
       <button onclick="incrIng(this.previousElementSibling);updateSubtotal(this.parentElement.previousElementSibling,this.parentElement.nextElementSibling,this.previousElementSibling,this.parentElement.parentElement.parentElement.parentElement);">
          <i class="fa-regular fa-plus"></i>
@@ -846,7 +885,7 @@ function reduceQty(e) {
 
    redu(inp)
 
-   if (e.innerHTML == 1) {
+   if (e.innerHTML == 0) {
       delCartItem(e.parentElement.parentElement.parentElement)
    }
 

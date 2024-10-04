@@ -3,17 +3,12 @@
 
 include '../connection.php';
 
-echo '<pre>';
-print_r(json_decode($_POST['cart']));
-echo '</pre>';
 
 $cart = $_POST['cart'];
 $type = $_POST['type'];
 $total = $_POST['total'];
 $client = $_POST['client'];
 $currTime = time();
-
-// echo $cart,$type,$total,'confirmation',$currTime,$client;
 
 $sql = "INSERT INTO `orders` 
       (plats,type,total,status,time,client)
@@ -24,11 +19,6 @@ $response = mysqli_query($con,$sql);
 
 
 
-
-// echo ;
-// echo '<pre>';
-// print_r(json_decode($_POST['cart'])[0]->id);
-// echo '</pre>';
 
 foreach (json_decode($_POST['cart']) as $e) {
    if ($e->type == 'plat') {

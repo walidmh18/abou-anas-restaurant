@@ -410,7 +410,7 @@ button.checkCartBtn {
 }
 
 .sidePanel {
-   height: 100lvh;
+   height: 100dvh;
    padding: 2em;
    display: flex;
    flex-direction: column;

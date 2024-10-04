@@ -1,12 +1,6 @@
 <?php 
 include '../../connection.php';
 
-echo '<pre>';
-print_r($_FILES);
-echo '</pre>';
-
-echo $_FILES['image']['name'];
-echo 'aa';
 
 if(isset($_POST['save']) && !empty($_POST['id']) && empty($_FILES['image']['name']) && !isset($_POST['delete'])){
    $id = $_POST['id'];
@@ -49,10 +43,9 @@ if(isset($_POST['save']) && !empty($_POST['id']) && empty($_FILES['image']['name
 
 
    $_FILES['image']['name'] = time().uniqid(rand()).$type;
-   $image_name = 'http://localhost/code/abou-anas-restaurant/images/'.$_FILES['image']['name'];
+   $image_name = 'https://r.vic-enp.com/images/'.$_FILES['image']['name'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
    $image_size = $_FILES['image']['size'];
-   // echo $image_name;
    $target = "../../images/".basename($_FILES['image']['name']);
    
    $info = getimagesize($_FILES['image']['tmp_name']);
@@ -65,7 +58,7 @@ if(isset($_POST['save']) && !empty($_POST['id']) && empty($_FILES['image']['name
       header("Location: index.php?status=fail&err=Sorry, The file is too large.");
       
    } else if (move_uploaded_file($image_tmp_name, $target)) {
-      echo isset($_POST['id']);
+
 
       if (isset($_POST['save'])  && empty($_POST['id'])) {
 
@@ -81,10 +74,10 @@ if(isset($_POST['save']) && !empty($_POST['id']) && empty($_FILES['image']['name
          exit();
       } else if(isset($_POST['save']) && !empty($_POST['id'])){
          $id = $_POST['id'];
-   echo 'bbbb';
-   echo $id.'<br>';
+
+
    $fr = $_POST['nomFr'];
-   // echo $.'<br>';
+
          $ar = $_POST['nomAr'];
          $prix = $_POST['prix'];
          $category = $_POST['categoryInp'];
@@ -117,5 +110,3 @@ else if(isset($_POST['delete'])){
    header("Location: ./");
          exit();
 }
-
-echo 'aaa';

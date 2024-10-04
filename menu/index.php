@@ -1,14 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE html><?php session_start();
+include'../connection.php';
+
+?>
 <html lang="en">
 
 <head>
 
 
-    <?php
-
-    session_start();
-    include '../connection.php';
-    ?>
     <title>Menu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" integrity="sha512-Ysw1DcK1P+uYLqprEAzNQJP+J4hTx4t/3X2nbVwszao8wD+9afLjBQYjz7Uk4ADP+Er++mJoScI42ueGtQOzEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css" integrity="sha512-pmAAV1X4Nh5jA9m+jcvwJXFQvCBi3T17aZ1KWkqXr7g/O2YMvO8rfaa5ETWDuBvRq6fbDjlw4jHL44jNTScaKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -152,7 +150,7 @@
                 ?>
 
 
-                    <div class="plat plat<?= $id ?>" id="<?= $plat_id; ?>">
+                    <div class="plat plat<?= $plat_id ?>" id="<?= $plat_id; ?>">
                         <div class="img">
                             <img src="<?= $img; ?>" alt="">
 
