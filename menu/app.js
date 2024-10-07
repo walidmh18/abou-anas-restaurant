@@ -264,7 +264,9 @@ function incr(e) {
    }
 
    if (found == false) {
-      let obj = { id: id, qty: 1, type: type, img: img, name: name, price: price.replace(" DA", ""), contents: contents }
+      let p = price.match(/\d/g);
+p = p.join("");
+      let obj = { id: id, qty: 1, type: type, img: img, name: name, price: p, contents: contents }
       if (type != 'sandwich') { the_cart.push(obj) }
       let sideEl = document.createElement('div')
       sideEl.classList.add(obj.type)
@@ -650,9 +652,9 @@ function createSandwich() {
 
 </div>
 
-<div class="ingredient">
+<div class="ingredient paid">
    <div class="name">
-         <div class="fr">Frittes</div>
+         <div class="fr">Frittes  <span>(+50DA)</span></div>
          <div class="ar">بطاطا</div>
    </div>
    <label class="switch">
@@ -661,6 +663,71 @@ function createSandwich() {
    </label>
 </div>
 
+<div class="ingredient paid">
+   <div class="name">
+         <div class="fr">Hmiss <span>(+50DA)</span></div>
+         <div class="ar">حميس</div>
+   </div>
+   <label class="switch">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
+         <span class="slider"></span>
+   </label>
+</div>
+
+<div class="ingredient paid">
+   <div class="name">
+         <div class="fr">Salade au tomate <span>(+50DA)</span></div>
+         <div class="ar">سلطة بالطماطم</div>
+   </div>
+   <label class="switch">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
+         <span class="slider"></span>
+   </label>
+</div>
+
+<div class="ingredient">
+   <div class="name">
+         <div class="fr">Mayounaise</div>
+         <div class="ar">مايونيز</div>
+   </div>
+   <label class="switch">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
+         <span class="slider"></span>
+   </label>
+</div>
+
+
+<div class="ingredient">
+   <div class="name">
+         <div class="fr">Harissa</div>
+         <div class="ar">هريسة</div>
+   </div>
+   <label class="switch">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
+         <span class="slider"></span>
+   </label>
+</div>
+
+<div class="ingredient">
+   <div class="name">
+         <div class="fr">Ketchup</div>
+         <div class="ar">كتشب</div>
+   </div>
+   <label class="switch">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
+         <span class="slider"></span>
+   </label>
+</div>
+<div class="ingredient">
+   <div class="name">
+         <div class="fr">Moutarde</div>
+         <div class="ar">الخردل</div>
+   </div>
+   <label class="switch">
+         <input type="checkbox" onchange="toggleGarni(this.parentElement.parentElement)">
+         <span class="slider"></span>
+   </label>
+</div>
 
 <div class="sandwichPrice">
    <div class="quantity">
@@ -717,7 +784,8 @@ function reduIng(e) {
 }
 function updateSubtotal(up, tp, qt, p) {
    let name = up.parentElement.parentElement.querySelector('.fr').innerHTML
-   let unitPrice = up.innerHTML.replace('DA *', '')
+   let unitPrice = up.innerHTML.match(/\d/g);
+unitPrice = unitPrice.join("");
    let quantity = qt.value
 
    let subTotal = unitPrice * quantity
@@ -727,12 +795,21 @@ function updateSubtotal(up, tp, qt, p) {
 
    let totalPriceContainer = p.querySelector('.sandwichPrice h2')
    let subTotals = [...p.querySelectorAll('p.totalPrice')]
+   const paidIngredients = [...p.querySelectorAll('.ingredient.paid input')]
    let totalPrice = 0
    for (let i = 0; i < subTotals.length; i++) {
-      let pr = Number(subTotals[i].innerHTML.replace('DA', ''))
+      let pr = subTotals[i].innerHTML.match(/\d/g)
+pr = Number(pr.join(""));
       totalPrice += pr
 
    }
+
+   paidIngredients.forEach(inp=>{
+      if (inp.checked) {
+         totalPrice+= 50;
+      }
+   })
+
    totalPriceContainer.innerHTML = totalPrice + 'DA'
 
    the_cart.forEach(o => {
@@ -790,12 +867,27 @@ function toggleGarni(e) {
    if (the_cart.find(l => l.id == id && l.type == 'sandwich')) {
       if (e.querySelector('input').checked) {
          the_cart.find(l => l.id == id && l.type == 'sandwich').add.push(name)
+         if (e.classList.contains('paid')) {
+            the_cart.find(l => l.id == id && l.type == 'sandwich').price += 50
+            let totalP = e.parentElement.querySelector('.sandwichPrice h2').innerHTML.match(/\d/g);
+            totalP = Number(totalP.join(""));
+            totalP += 50;
+            e.parentElement.querySelector('.sandwichPrice h2').innerHTML = totalP + "DA"
+         }
       } else {
          let nid = the_cart.find(l => l.id == id && l.type == 'sandwich').add.indexOf(name)
          the_cart.find(l => l.id == id && l.type == 'sandwich').add.splice(nid, 1);
-
+         if (e.classList.contains('paid')) {
+            the_cart.find(l => l.id == id && l.type == 'sandwich').price -= 50
+            let totalP = e.parentElement.querySelector('.sandwichPrice h2').innerHTML.match(/\d/g);
+            totalP = Number(totalP.join(""));
+            totalP -= 50;
+            e.parentElement.querySelector('.sandwichPrice h2').innerHTML = totalP + "DA"
+         }
       }
    }
+   updateTotal(the_cart);
+
    refreshSandwichesInCart()
 
 
@@ -830,6 +922,7 @@ function delSandwich(e) {
 
    }
    updateSandwiches()
+   updateTotal(the_cart)
 
    document.querySelector('#cart' + type + id).remove()
 }

@@ -319,6 +319,12 @@ button.checkCartBtn {
 
 }
 
+
+.sandwich .contents .ingredient.paid span{
+   color: var(--b2);
+   
+}
+
 .sandwich .contents .ingredient>* {
    font-size: 1.6em;
 }
