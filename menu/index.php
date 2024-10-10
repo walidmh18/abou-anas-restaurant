@@ -81,7 +81,7 @@ include'../connection.php';
 
                             <div class="bottom">
                                 <h2 class="price"><?= $price ?> DA</h2>
-                                <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
+                                <button class="addtocart">Ajouter</button>
                                 <div class="quantity">
 
                                     <button onclick="redu(this.nextElementSibling)">
@@ -163,7 +163,7 @@ include'../connection.php';
 
                         <div class="bottom">
                             <h2 class="price"><?= $price; ?> DA</h2>
-                            <button class="addtocart"><i class="fa-solid fa-cart-plus"></i></button>
+                            <button class="addtocart">Ajouter</button>
                             <div class="quantity">
 
                                 <button onclick="redu(this.nextElementSibling)">

@@ -102,13 +102,15 @@ body {
 .addtocart {
    color: var(--b1);
    background: var(--b2);
-   width: 3em;
-   height: 3em;
    display: grid;
    place-items: center;
    border-radius: 0.6em;
    display: none;
-}
+
+   
+      padding: 0.3em 1em;
+      font-size: 1.3em;
+  }
 
 button.addtocart.active {
    display: grid;
