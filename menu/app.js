@@ -136,6 +136,10 @@ function updateStep() {
       table.classList.remove('active')
       emporter.classList.remove('active')
       livraison.classList.remove('active')
+      additionalPrice = 0
+         document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
+            el.innerHTML =''
+         })
 
    } else if (step == 4) {
       plcommande.classList.add('active')
@@ -171,6 +175,10 @@ commander.addEventListener('click', () => {
 
 
 confirmer.addEventListener('click', () => {
+   if (the_cart == '' || the_cart == []) {
+      err('Panier est vide.')
+      return;
+   }
    if (step == 1) {
       step = 2
    }
@@ -198,6 +206,7 @@ checkCartBtn.addEventListener('click', () => {
       })
       document.querySelector('input#cartInp').value = JSON.stringify(the_cart)
       document.querySelector('input#totalInp').value = total
+      
 
    }
    updateStep()
@@ -215,6 +224,7 @@ checkBtn.addEventListener('click', () => {
 
 
 
+let additionalPrice = 0;
 
 const sideCartContainer = cart.querySelector('.itemsContainer')
 
@@ -1025,16 +1035,48 @@ function fixOrderType(a) {
          table.classList.add('active')
          orderType = 'sur place'
          document.querySelector('#typeInp').value = 'sur place'
+         additionalPrice = 0
+         document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
+            el.innerHTML =''
+         })
 
       } else if (a == 'emp') {
          emporter.classList.add('active')
          orderType = 'emporter'
          document.querySelector('#typeInp').value = 'emporter'
+         additionalPrice = 0
+         document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
+            el.innerHTML =''
+         })
+
 
       } else if (a == 'liv') {
          livraison.classList.add('active')
          orderType = 'livraison'
          document.querySelector('#typeInp').value = 'livraison'
+         additionalPrice = 300
+
+         document.querySelectorAll('.label input').forEach(inp=>{
+            inp.addEventListener('input',(e)=>{
+               if(e.target.id == 'bbhsen-inp'){
+                  additionalPrice = 300
+               } else if(e.target.id == 'drria-inp'){
+                  additionalPrice = 400
+               } else if (e.target.id == 'autres-inp'){
+                  additionalPrice = 500
+               }
+
+
+
+               document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
+                  el.innerHTML ="+"+ additionalPrice + "DA"
+               })
+            })
+            
+            document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
+               el.innerHTML ="+"+ additionalPrice + "DA"
+            })
+         })
 
       }
       updateStep()
@@ -1045,20 +1087,73 @@ let client
 
 plcommande.addEventListener('click', () => {
    if (orderType == 'sur place') {
+
       client = document.querySelector('.sidePanel.table input[type="number"]').value
-      document.querySelector('#clientInp').value = client
+      if (document.querySelector('.sidePanel.table input[type="number"]').value == '') {
+         err('Entrer le numéro de votre table.')
+         inpErr(document.querySelector('.sidePanel.table input[type="number"]'))
+         return;
+      }
+      document.querySelector('#clientInp').value = 'table ' + client
    } else if (orderType == 'emporter') {
+
+      if (document.querySelector('#empNom').value == '') {
+         err('Entrer votre Nom.')
+         inpErr(document.querySelector('#empNom'))
+         return;
+      } else if (document.querySelector('#empNum').value == ''){
+         err('Entrer votre Numéro de téléphone.')
+         inpErr(document.querySelector('#empNum'))
+         return;
+      }
       client = `nom: ${document.querySelector('#empNom').value} <br>
 tél: ${document.querySelector('#empNum').value}`
       document.querySelector('#clientInp').value = client
    } else if (orderType == 'livraison') {
+
+      if (document.querySelector('#livName').value == '') {
+         err('Entrer votre Nom.')
+         inpErr(document.querySelector('#livName'))
+         return;
+      } else if (document.querySelector('#livNum').value == ''){
+         err('Entrer votre Numéro de téléphone.')
+         inpErr(document.querySelector('#livNum'))
+         return;
+      }
+
+      let location = ''
+      if(document.querySelector('#bbhsen-inp').checked){
+         location = 'baba hsen'
+      } else if(document.querySelector('#drria-inp').checked){
+         location = 'draria'
+      } else if(document.querySelector('#autres-inp').checked){
+         if (document.querySelector('#livLocation').value == '') {
+            err('Entrer votre Location.')
+            inpErr(document.querySelector('#livLocation'))
+            return;
+         }
+         location = document.querySelector('#livLocation').value;
+      }
       client = `nom: ${document.querySelector('#livName').value}<br>
 tél: ${document.querySelector('#livNum').value} <br>
-loc: ${document.querySelector('#livLocation').value}`
+loc: ${location}`
       document.querySelector('#clientInp').value = client
    }
+
+   document.querySelector('input#totalInp').value = Number(document.querySelector('input#totalInp').value) + additionalPrice
+
 
    finalForm.submit()
 })
 
+function err(msg){
+   let notifier = new AWN()
+   notifier.alert(msg, {}) 
+}
 
+function inpErr(inp){
+   inp.classList.add('err');
+   inp.addEventListener('input',() => {
+      inp.classList.remove('err')
+   })
+}

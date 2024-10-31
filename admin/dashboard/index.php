@@ -1,14 +1,23 @@
 <?php session_start();
 if (!isset($_SESSION['login'])) {
-header("Location: ../login?err=3");
+   header("Location: ../login?err=3");
    exit();
+}
+
+function dateToFrench($date, $format)
+{
+   $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+   $french_days = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
+   $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+   $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+   return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date))));
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<?php
+   <?php
    include '../../head.php';
    include '../../connection.php';
    ?>
@@ -17,19 +26,21 @@ header("Location: ../login?err=3");
    <title>Tableau de bord</title>
    <link rel="stylesheet" href="./style.css">
    <style>
-      .sideMenu .tdb{
-         background:var(--d1);
+      .sideMenu .tdb {
+         background: var(--d1);
       }
    </style>
 </head>
 
 <body>
-<?php include '../sideMenu.php'; ?>
+
+
+   <?php include '../sideMenu.php'; ?>
 
    <div class="body">
       <div class="title">
          <h1>Tableau de bord</h1>
-         <p class="date">Jeudi, 12 Septembre 2024</p>
+         <p class="date"><?= dateToFrench("now", "l j F Y"); ?></p>
       </div>
       <div class="container">
          <div class="left">
@@ -127,78 +138,78 @@ header("Location: ../login?err=3");
                   <h2>Rapport de jour</h2>
                </div>
 
-<div class="tableContainer">
-   
-<table class="table">
-                  <tr class="tableHeader">
-                     <th>Temps</th>
-                     <th>Articles</th>
-                     <th>Total</th>
-                     <th>Type</th>
-                     <th>Statu</th>
-                  </tr>
+               <div class="tableContainer">
 
-                  <?php
-                  $sql = "SELECT * FROM `orders` WHERE time >= $today";
-                  $response = mysqli_query($con, $sql);
-
-                  while ($item = mysqli_fetch_array($response, MYSQLI_ASSOC)) {
-                  ?>
-                     <tr class="tableElement">
-                        <td class="temps"><?= time_elapsed_string($item['time']) ?></td>
-                        <td class="orderSum">
-
-                           <ul>
-                              <?php
-                              foreach (json_decode($item['plats']) as $i) {
-                                 if ($i->type != 'sandwich') {
-                              ?>
-                                    <li><?= $i->qty ?>* <?= $i->name->fr ?></li>
-                                 <?php
-                                 } else {
-                                    // {"id":"0","type":"sandwich","price":600,"ings":[{"name":"Royal dinde","qty":"4"}],"add":[],"qty":1}
-
-                                 ?>
-                                    <li>
-                                       <?= $i->qty ?> * Sandwich
-                                    </li>
-
-                                    <?php
-
-                                    foreach ($i->ings as $value) {
-                                    ?>
-                                       <li class="ingredient"><?= $value->qty ?> *<?= $value->name ?></li>
-                                    <?php
-                                    }
-
-                                    foreach ($i->add as $value) {
-                                    ?>
-                                       <li class="ingredient"><?= $value ?></li>
-                                    <?php
-                                    }
-
-                                    ?>
-                              <?php
-                                 }
-                              }
-                              ?>
-                           </ul>
-
-                        </td>
-                        <td class="total"><?= $item['total'] ?> DA</td>
-                        <td class="type"><?= $item['type'] ?></td>
-                        <td class="statu">
-                           <p class="<?= $item['status'] ?>"><?= $item['status'] ?></p>
-                        </td>
+                  <table class="table">
+                     <tr class="tableHeader">
+                        <th>Temps</th>
+                        <th>Articles</th>
+                        <th>Total</th>
+                        <th>Type</th>
+                        <th>Statu</th>
                      </tr>
-                  <?php
-                  }
+
+                     <?php
+                     $sql = "SELECT * FROM `orders` WHERE time >= $today";
+                     $response = mysqli_query($con, $sql);
+
+                     while ($item = mysqli_fetch_array($response, MYSQLI_ASSOC)) {
+                     ?>
+                        <tr class="tableElement">
+                           <td class="temps"><?= time_elapsed_string($item['time']) ?></td>
+                           <td class="orderSum">
+
+                              <ul>
+                                 <?php
+                                 foreach (json_decode($item['plats']) as $i) {
+                                    if ($i->type != 'sandwich') {
+                                 ?>
+                                       <li><?= $i->qty ?>* <?= $i->name->fr ?></li>
+                                    <?php
+                                    } else {
+                                       // {"id":"0","type":"sandwich","price":600,"ings":[{"name":"Royal dinde","qty":"4"}],"add":[],"qty":1}
+
+                                    ?>
+                                       <li>
+                                          <?= $i->qty ?> * Sandwich
+                                       </li>
+
+                                       <?php
+
+                                       foreach ($i->ings as $value) {
+                                       ?>
+                                          <li class="ingredient"><?= $value->qty ?> *<?= $value->name ?></li>
+                                       <?php
+                                       }
+
+                                       foreach ($i->add as $value) {
+                                       ?>
+                                          <li class="ingredient"><?= $value ?></li>
+                                       <?php
+                                       }
+
+                                       ?>
+                                 <?php
+                                    }
+                                 }
+                                 ?>
+                              </ul>
+
+                           </td>
+                           <td class="total"><?= $item['total'] ?> DA</td>
+                           <td class="type"><?= $item['type'] ?></td>
+                           <td class="statu">
+                              <p class="<?= $item['status'] ?>"><?= $item['status'] ?></p>
+                           </td>
+                        </tr>
+                     <?php
+                     }
 
 
-                  ?>
+                     ?>
 
-               </table>
-</div>
+                  </table>
+               </div>
             </div>
          </div>
          <div class="right">
@@ -235,22 +246,7 @@ header("Location: ../login?err=3");
 
                   ?>
 
-                  <!-- <div class="item">
-                     <img src="../../images/pack.png" alt="">
-                     <div class="info">
-                        <p class="name">pack</p>
-                        <p class="qty">200 dishes</p>
 
-                     </div>
-                  </div>
-                  <div class="item">
-                     <img src="../../images/pack.png" alt="">
-                     <div class="info">
-                        <p class="name">pack</p>
-                        <p class="qty">200 dishes</p>
-
-                     </div>
-                  </div> -->
                </div>
                <a href="./mostOrdered.php" class="voirTous">Voir tous</a>
             </div>
@@ -260,27 +256,27 @@ header("Location: ../login?err=3");
                </div>
                <div class="container">
                   <div class="progressContainer">
-                     <div class="livraison" data-progress="20deg" style="background: conic-gradient(#65B0F6 <?= ($types['liv'] / $n_of_orders) * 360 ?>deg,#444444 0deg);">
+                     <div class="livraison" data-progress="20deg" style="background: conic-gradient(#65B0F6 <?= $n_of_orders!=0? ($types['liv'] / $n_of_orders) * 360 :0 ?>deg,#444444 0deg);">
                         <div class="start">
                            <div></div>
                         </div>
-                        <div class="finish" style="rotate:<?= ($types['liv'] / $n_of_orders) * 360 ?>deg;">
+                        <div class="finish" style="rotate:<?= $n_of_orders!=0? ($types['liv'] / $n_of_orders) * 360 :0 ?>deg;">
                            <div></div>
                         </div>
                      </div>
-                     <div class="emporter" data-progress="70deg" style="background: conic-gradient(#FFB572 <?= ($types['emp'] / $n_of_orders) * 360 ?>deg,#3a3a3a 0deg);">
+                     <div class="emporter" data-progress="70deg" style="background: conic-gradient(#FFB572 <?= $n_of_orders!=0? ($types['emp'] / $n_of_orders) * 360 :0 ?>deg,#3a3a3a 0deg);">
                         <div class="start">
                            <div></div>
                         </div>
-                        <div class="finish" style="rotate:<?= ($types['emp'] / $n_of_orders) * 360 ?>deg;">
+                        <div class="finish" style="rotate:<?= $n_of_orders!=0? ($types['emp'] / $n_of_orders) * 360 :0 ?>deg;">
                            <div></div>
                         </div>
                      </div>
-                     <div class="surplace" data-progress="50deg" style="background: conic-gradient(#FF7CA3 <?= ($types['sp'] / $n_of_orders) * 360 ?>deg,#444444 0deg);">
+                     <div class="surplace" data-progress="50deg" style="background: conic-gradient(#FF7CA3 <?= $n_of_orders!=0? ($types['sp'] / $n_of_orders) * 360 :0 ?>deg,#444444 0deg);">
                         <div class="start">
                            <div></div>
                         </div>
-                        <div class="finish" style="rotate:<?= ($types['sp'] / $n_of_orders) * 360 ?>deg;">
+                        <div class="finish" style="rotate:<?= $n_of_orders!=0? ($types['sp'] / $n_of_orders) * 360 :0 ?>deg;">
                            <div></div>
                         </div>
                      </div>
@@ -289,16 +285,26 @@ header("Location: ../login?err=3");
                   </div>
                   <div class="key">
                      <div>
-                        <div style="background: #FFB572;"></div>
-                        <p>Emporter</p>
+                        <div style="background: #FFB572;" class="cloloredd"></div>
+                        <div>
+                           <p>Emporter</p>
+                           <p><?= $types['liv'] ?></p>
+                        </div>
                      </div>
                      <div>
-                        <div style="background:#65B0F6;"></div>
-                        <p>Livraison</p>
+                        <div style="background:#65B0F6;" class="cloloredd"></div>
+                        <div>
+                           <p>Livraison</p>
+                           <p><?= $types['emp'] ?></p>
+                        </div>
                      </div>
                      <div>
-                        <div style="background: #FF7CA3 ;"></div>
-                        <p>A table</p>
+                        <div style="background: #FF7CA3 ;" class="cloloredd"></div>
+                        <div>
+                           <p>A table</p>
+                           <p><?= $types['sp'] ?></p>
+                        </div>
+
                      </div>
                   </div>
                </div>

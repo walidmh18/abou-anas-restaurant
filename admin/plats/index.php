@@ -3,6 +3,7 @@ if (!isset($_SESSION['login'])) {
 header("Location: ../login?err=3");
    exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,13 +87,7 @@ header("Location: ../login?err=3");
             <?php
             }
             ?>
-            <!-- <div class="plat">
-               <img src="../../images/plat1.png" alt="">
-               <p class="fr">name</p>
-               <p class="ar">الاسم</p>
-               <p class="price">1200DA</p>
-               <button onclick="popup(this)" class="y-button">Modifier</button>
-            </div> -->
+            
          </div>
 
          <?php

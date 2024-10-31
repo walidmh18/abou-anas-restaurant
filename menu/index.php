@@ -1,7 +1,7 @@
 <!DOCTYPE html><?php session_start();
-include'../connection.php';
+                include '../connection.php';
 
-?>
+                ?>
 <html lang="en">
 
 <head>
@@ -12,6 +12,9 @@ include'../connection.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.css" integrity="sha512-pmAAV1X4Nh5jA9m+jcvwJXFQvCBi3T17aZ1KWkqXr7g/O2YMvO8rfaa5ETWDuBvRq6fbDjlw4jHL44jNTScaKg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <?php include '../head.php'; ?>
     <link rel="stylesheet" href="./style.css">
+
+    <link rel="stylesheet" href="./anim.css">
+    <script src="./anim.js"></script>
 
 </head>
 
@@ -59,23 +62,25 @@ include'../connection.php';
 
                             </div>
                             <ul class="plats">
-                                
 
-                                <?php 
-                                foreach($contents as $t){
-                                    
-                                    
+
+                                <?php
+                                foreach ($contents as $t) {
+
+
                                     foreach ($t as $x => $y) {
                                         $query = "SELECT name_fr FROM `plats` WHERE id='$x'";
                                         $res = mysqli_query($con, $query);
-                                        while ($el = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
-                                            
-                                        
+                                        while ($el = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+
+
 
                                 ?>
-                                <li><?= $y.'* '.$el['name_fr']; ?></li>
-                                
-                                <?php }}}
+                                            <li><?= $y . '* ' . $el['name_fr']; ?></li>
+
+                                <?php }
+                                    }
+                                }
                                 ?>
                             </ul>
 
@@ -100,7 +105,7 @@ include'../connection.php';
                     </div>
                 <?php } ?>
 
-                
+
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -220,10 +225,10 @@ include'../connection.php';
             </div>
         </div>
         <div class="itemsContainer">
-           
+
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice1">0DA</span></h2>
+            <h2>Total: <span id="totalPrice1">0DA</span><span class="livPrice"></span></h2>
         </div>
     </div>
 
@@ -258,7 +263,7 @@ include'../connection.php';
             </div>
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice">0DA</span></h2>
+            <h2>Total: <span id="totalPrice">0DA</span><span class="livPrice"></span></h2>
         </div>
     </div>
 
@@ -282,7 +287,7 @@ include'../connection.php';
             </div>
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice4">0DA</span></h2>
+            <h2>Total: <span id="totalPrice4">0DA</span><span class="livPrice"></span></h2>
         </div>
     </div>
 
@@ -315,10 +320,10 @@ include'../connection.php';
             </div>
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice2">0DA</span></h2>
+            <h2>Total: <span id="totalPrice2">0DA</span><span class="livPrice"></span></h2>
         </div>
     </div>
-    <div class="sidePanel livraison">
+    <div class="sidePanel livraison "> <!-- delete active -->
         <div class="">
             <h1 class="pageTitle">Livraison</h1>
         </div>
@@ -342,20 +347,56 @@ include'../connection.php';
                     <input type="text" name="livNum" id="livNum" placeholder="0555 55 55 55">
 
                 </div>
-                <div>
-                    <label for="livLocation" class="persInfoLabel">
+
+                <div class="">
+                <label for="livLocation" class="persInfoLabel" style="margin-bottom:0;">
                         <p class="fr">Location</p>
                         <p class="ar">الموقع</p>
                     </label>
-
-                    <input type="text" name="livLocation" id="livLocation" placeholder="Baba H'sen, Alger">
                 </div>
+
+                <div class="radio-input">
+                
+                    <label class="label">
+                        <input
+                            type="radio"
+                            id="bbhsen-inp"
+                            checked=""
+                            name="livLocation"
+                            value="Baba H'sen" />
+                        <div class="textContainer">
+                            <p class="text fr">Baba H'sen <span>(+300DA)</span></p>
+                            <p class="text ar">بابا حسن</p>
+                        </div>
+
+                    </label>
+                    <label class="label">
+                        <input type="radio" id="drria-inp" name="livLocation" value="Draria" />
+                        <div class="textContainer">
+                            <p class="text fr">Draria <span>(+400DA)</span></p>
+                            <p class="text ar">درارية</p>
+                        </div>
+                    </label>
+                    <label class="label">
+                        <input type="radio" id="autres-inp" name="livLocation" value="Autres" />
+                        <div class="textContainer">
+                            <p class="text fr">Autres Communes <span>(+500DA)</span></p>
+                            <p class="text ar">بلديات اخرى</p>
+                            <div class="inppContainer">
+                    <input type="text" name="livLocation" id="livLocation" placeholder="Entrer la commune">
+                            
+                            </div>
+                        </div>
+
+                    </label>
+                </div>
+
             </div>
 
 
         </div>
         <div class="cartTotal">
-            <h2>Total: <span id="totalPrice3">0DA</span></h2>
+            <h2>Total: <span id="totalPrice3">0DA</span><span class="livPrice"></span></h2>
         </div>
     </div>
 
