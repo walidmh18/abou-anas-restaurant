@@ -627,7 +627,7 @@ function createSandwich() {
       ing.innerHTML +=
          `
 <div class="name">
-   <p class="fr">${b.fr}</p>
+   <p class="fr" data-content="${b.fr}">${b.fr}</p>
    <p class="ar">${b.ar}</p>
 </div>
 <div class="price">
@@ -664,7 +664,7 @@ function createSandwich() {
 
 <div class="ingredient paid">
    <div class="name">
-         <div class="fr">Frittes  <span>(+50DA)</span></div>
+         <div class="fr" data-content ="Frittes +50">Frittes  <span>(+50DA)</span></div>
          <div class="ar">بطاطا</div>
    </div>
    <label class="switch">
@@ -675,7 +675,7 @@ function createSandwich() {
 
 <div class="ingredient paid">
    <div class="name">
-         <div class="fr">Hmiss <span>(+50DA)</span></div>
+         <div class="fr" data-content ="Hmiss +50">Hmiss <span>(+50DA)</span></div>
          <div class="ar">حميس</div>
    </div>
    <label class="switch">
@@ -686,7 +686,7 @@ function createSandwich() {
 
 <div class="ingredient paid">
    <div class="name">
-         <div class="fr">Salade au tomate <span>(+50DA)</span></div>
+         <div class="fr" data-content ="Salade au tomate +50">Salade au tomate <span>(+50DA)</span></div>
          <div class="ar">سلطة بالطماطم</div>
    </div>
    <label class="switch">
@@ -697,7 +697,7 @@ function createSandwich() {
 
 <div class="ingredient">
    <div class="name">
-         <div class="fr">Mayounaise</div>
+         <div class="fr" data-content ="Mayounaise">Mayounaise</div>
          <div class="ar">مايونيز</div>
    </div>
    <label class="switch">
@@ -709,7 +709,7 @@ function createSandwich() {
 
 <div class="ingredient">
    <div class="name">
-         <div class="fr">Harissa</div>
+         <div class="fr" data-content ="Harissa">Harissa</div>
          <div class="ar">هريسة</div>
    </div>
    <label class="switch">
@@ -720,7 +720,7 @@ function createSandwich() {
 
 <div class="ingredient">
    <div class="name">
-         <div class="fr">Ketchup</div>
+         <div class="fr" data-content ="Ketchup">Ketchup</div>
          <div class="ar">كتشب</div>
    </div>
    <label class="switch">
@@ -730,7 +730,7 @@ function createSandwich() {
 </div>
 <div class="ingredient">
    <div class="name">
-         <div class="fr">Moutarde</div>
+         <div class="fr" data-content ="Moutarde">Moutarde</div>
          <div class="ar">الخردل</div>
    </div>
    <label class="switch">
@@ -793,7 +793,7 @@ function reduIng(e) {
    e.focus
 }
 function updateSubtotal(up, tp, qt, p) {
-   let name = up.parentElement.parentElement.querySelector('.fr').innerHTML
+   let name = up.parentElement.parentElement.querySelector('.fr').getAttribute('data-content')
    let unitPrice = up.innerHTML.match(/\d/g);
 unitPrice = unitPrice.join("");
    let quantity = qt.value

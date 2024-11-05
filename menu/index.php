@@ -57,7 +57,7 @@
                         <img src="<?= $img; ?>" alt="pack">
                         <div class="content">
                             <div class="name">
-                                <p class="fr"><?= $fr; ?></p>
+                                <p class="fr" data-content = "<?= $fr; ?>"><?= $fr; ?></p>
                                 <p class="ar"><?= $ar; ?></p>
 
                             </div>
@@ -161,7 +161,7 @@
 
                         </div>
                         <div class="platName">
-                            <p class="fr"><?= $plat_fr; ?></p>
+                            <p class="fr"  data-content = "<?= $plat_fr; ?>"><?= $plat_fr; ?></p>
                             <p class="ar"><?= $plat_ar; ?></p>
 
                         </div>
