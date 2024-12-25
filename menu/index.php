@@ -151,11 +151,12 @@
                     $plat_ar = $row2['name_ar'];
                     $price = $row2['price'];
                     $img = $row2['image_address'];
+                    $price_type = $row2['price_type'];
 
                 ?>
 
 
-                    <div class="plat plat<?= $plat_id ?>" id="<?= $plat_id; ?>">
+                    <div class="plat plat<?= $plat_id ?> plat<?= $price_type ?>" id="<?= $plat_id; ?>">
                         <div class="img">
                             <img src="<?= $img; ?>" alt="">
 
@@ -167,7 +168,7 @@
                         </div>
 
                         <div class="bottom">
-                            <h2 class="price"><?= $price; ?> DA</h2>
+                            <h2 class="price"><?= $price; ?> DA <?php if($price_type=='kg'){echo'<span style="color:white">/Kg</span>';} ?></h2>
                             <button class="addtocart">Ajouter</button>
                             <div class="quantity">
 
@@ -175,7 +176,7 @@
                                     <i class="fa-regular fa-minus"></i>
 
                                 </button>
-                                <input type="number" value="0" min="0" onblur="corr(this)">
+                                <input type="number" value="0" min="0" onblur="corr(this)" class="<?= $price_type ?>">
 
                                 <button onclick="incr(this.previousElementSibling)">
                                     <i class="fa-regular fa-plus"></i>

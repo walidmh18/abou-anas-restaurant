@@ -873,3 +873,20 @@ button.checkCartBtn {
 input.err{
    outline: red 1px solid;
 }
+
+.platkg .quantity::after{
+   content:'(g)';
+   font-size: 0.7em;
+
+
+}
+
+.platkg .quantity button{
+   font-size: 1em;
+
+}
+
+.platkg .quantity input{
+   width: 2.5em;
+
+}

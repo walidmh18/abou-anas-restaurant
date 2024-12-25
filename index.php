@@ -27,11 +27,11 @@
          <i class="fa-solid fa-phone"></i>
       </div>
 
-      <div class="position">
+      <a class="position" href="https://maps.app.goo.gl/R963bRJDAzjjzpzQ9">
          <p class="ar">طريق المواسع كرطالة<br>
          بابا حسن الجزائر</p>
          <i class="fa-solid fa-location-dot"></i>
-      </div>
+      </a>
    </div>
 </body>
 </html>

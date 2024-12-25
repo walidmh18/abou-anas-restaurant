@@ -42,7 +42,7 @@ if (isset($_POST['save']) && !empty($_POST['id']) && empty($_FILES['image']['nam
 
 
    $_FILES['image']['name'] = time() . uniqid(rand()) . $type;
-   $image_name = 'https://r.vic-enp.com/images/' . $_FILES['image']['name'];
+   $image_name = 'https://www.restaurant-abou-anas-baba-hsen.com/images/' . $_FILES['image']['name'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
    $image_size = $_FILES['image']['size'];
    $target = "../../images/" . basename($_FILES['image']['name']);

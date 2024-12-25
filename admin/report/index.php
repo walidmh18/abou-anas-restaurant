@@ -1,17 +1,17 @@
 <?php session_start();
 if (!isset($_SESSION['login'])) {
-header("Location: ../login?err=3");
+   header("Location: ../login?err=3");
    exit();
 }
 
 
-function dateToFrench($date, $format) 
+function dateToFrench($date, $format)
 {
-    $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-    $french_days = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
-    $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
-    return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date) ) ) );
+   $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+   $french_days = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
+   $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+   $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+   return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date))));
 }
 ?>
 <!DOCTYPE html>
@@ -32,8 +32,8 @@ function dateToFrench($date, $format)
 
 
    <style>
-      .sideMenu .rap{
-         background:var(--d1);
+      .sideMenu .rap {
+         background: var(--d1);
       }
    </style>
 </head>
@@ -46,7 +46,7 @@ function dateToFrench($date, $format)
    <div class="body">
       <div class="title">
          <h1>Rapport</h1>
-         <p class="date"><?= dateToFrench("now" ,"l j F Y"); ?></p>
+         <p class="date"><?= dateToFrench("now", "l j F Y"); ?></p>
 
       </div>
       <div class="container">
@@ -119,6 +119,7 @@ function dateToFrench($date, $format)
                            let maxId = 0
 
                            setInterval(() => {
+                              console.log(maxId)
                               // console.log(a)
                               $.ajax({
                                  type: 'POST',
@@ -167,31 +168,17 @@ function dateToFrench($date, $format)
                                           <p class="${el.status}" onclick="popup(this.parentElement.parentElement)">${el.status}</p>
                                        </td>
                                     </tr>`);
-
-                                       if (Notification.permission === "granted") {
-                                          // If it's okay let's create a notification
-                                          if (el.status == 'confirmation') {
-                                             var notification = new Notification("Restaurant Abou Anas", {
-                                                body: 'Vous avez une nouvelle commande!'
-
+                                       let notifSound = new Audio('notification.mp3')
+                                       console.log(notifSound);
+                                       notifSound.play();
+                                       navigator.serviceWorker.register('sw.js');
+                                       Notification.requestPermission(function(result) {
+                                          if (result === 'granted') {
+                                             navigator.serviceWorker.ready.then(function(registration) {
+                                                registration.showNotification('Vous avez une nouvelle commande!');
                                              });
                                           }
-                                       }
-
-                                       // Otherwise, we need to ask the user for permission
-                                       else if (Notification.permission !== "denied") {
-                                          Notification.requestPermission().then(function(permission) {
-                                             // If the user accepts, let's create a notification
-                                             if (permission === "granted") {
-                                                if (el.status == 'confirmation') {
-                                                   var notification = new Notification("Restaurant Abou Anas", {
-                                                      body: 'Vous avez une nouvelle commande!'
-
-                                                   });
-                                                }
-                                             }
-                                          });
-                                       }
+                                       });
                                     })
                                  }
                               })

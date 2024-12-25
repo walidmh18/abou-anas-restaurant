@@ -137,9 +137,9 @@ function updateStep() {
       emporter.classList.remove('active')
       livraison.classList.remove('active')
       additionalPrice = 0
-         document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
-            el.innerHTML =''
-         })
+      document.querySelectorAll('.cartTotal .livPrice').forEach(el => {
+         el.innerHTML = ''
+      })
 
    } else if (step == 4) {
       plcommande.classList.add('active')
@@ -206,7 +206,7 @@ checkCartBtn.addEventListener('click', () => {
       })
       document.querySelector('input#cartInp').value = JSON.stringify(the_cart)
       document.querySelector('input#totalInp').value = total
-      
+
 
    }
    updateStep()
@@ -230,7 +230,19 @@ const sideCartContainer = cart.querySelector('.itemsContainer')
 
 
 function incr(e) {
-   e.value++
+   let priceType = '', qty
+
+   if (e.classList.contains('kg')) {
+      e.value = Number(e.value) + 100
+      e.focus()
+      priceType = 'kg'
+      qty = 0.1
+
+   } else {
+      e.value++
+      priceType = 'piece'
+      qty = 1
+   }
    e.focus()
 
    let found = false;
@@ -265,8 +277,15 @@ function incr(e) {
       if (the_cart[i].id == id && the_cart[i].type == type) {
 
          if (document.querySelector('#cart' + type + the_cart[i].id)) {
-            the_cart[i].qty++
-            document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML++
+            if (priceType == 'kg') {
+               the_cart[i].qty = Number(the_cart[i].qty) + 0.1
+
+            }
+            else {
+               the_cart[i].qty++
+            }
+            document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML = the_cart[i].qty
+            corr(e)
             found = true
 
          }
@@ -275,14 +294,22 @@ function incr(e) {
 
    if (found == false) {
       let p = price.match(/\d/g);
-p = p.join("");
-      let obj = { id: id, qty: 1, type: type, img: img, name: name, price: p, contents: contents }
+      p = p.join("");
+
+      let obj = { id: id, qty: qty, type: type, img: img, name: name, price: p, contents: contents, priceType: priceType }
       if (type != 'sandwich') { the_cart.push(obj) }
       let sideEl = document.createElement('div')
       sideEl.classList.add(obj.type)
       sideEl.id = 'cart' + obj.type + obj.id
 
       if (type == 'plat') {
+
+         let qtyy;
+         if (priceType == 'kg') {
+            qtyy = 1000 * qty + 'g'
+         } else {
+            qtyy = qty
+         }
          sideEl.innerHTML = `
 <div class="left">
    <button class="del" onclick="delCartItem(this.parentElement.parentElement)">
@@ -299,7 +326,7 @@ p = p.join("");
 
 <div class="right">
    <p class="uprice">${obj.price}</p>
-   <p>x<span class="qty">${obj.qty}</span></p>
+   <p>x<span class="qty">${qtyy}</span></p>
    <div class="qtyControls">
       <button onclick="increaseQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-up"></i></button>
       <button onclick="reduceQty(this.parentElement.parentElement.querySelector('span.qty'))"><i class="fa-solid fa-chevron-down"></i></button>
@@ -397,11 +424,11 @@ function updateTotal(o) {
    o.forEach(el => {
       total += el.qty * Number(el.price)
       if (el.qty == 0) {
-         o.splice(o.indexOf(el),1);
+         o.splice(o.indexOf(el), 1);
       }
    })
    tp.forEach(t => {
-      t.innerHTML = total + 'DA'
+      t.innerHTML = Math.round(total) + 'DA'
    })
 
 
@@ -410,6 +437,8 @@ function updateTotal(o) {
 
 
 function redu(e) {
+
+
    let type, id
    if (e.parentElement.parentElement.parentElement.id) {
       id = e.parentElement.parentElement.parentElement.id
@@ -420,11 +449,21 @@ function redu(e) {
       type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
 
    }
+
+   let priceType = ''
+
    if (e.value > 0) {
-
-      e.value--
-
-      document.querySelector('#cart' + type + id).querySelector('span.qty').innerHTML--
+      
+      
+      if (e.classList.contains('kg')) {
+         e.value = Number(e.value) - 100
+         e.focus()
+         priceType = 'kg'
+         
+      } else {
+         e.value--
+         priceType = 'piece'
+      }
 
    }
 
@@ -445,9 +484,23 @@ function redu(e) {
 
 
    for (let i = 0; i < the_cart.length; i++) {
-      if (the_cart[i].id == id) {
 
-         the_cart[i].qty--
+      
+      
+      if (the_cart[i].id == id) {
+         if (e.classList.contains('kg')) {
+            the_cart[i].qty = the_cart[i].qty - 0.1
+            
+            document.querySelector('#cart' + type + id).querySelector('span.qty').innerHTML = Math.round(the_cart[i].qty * 1000 + 'g')
+            corr(e)
+         } else {
+   
+            the_cart[i].qty--
+            document.querySelector('#cart' + type + id).querySelector('span.qty').innerHTML = the_cart[i].qty
+            corr(e)
+         }
+
+         
          if (the_cart[i].qty == 0) {
             the_cart.splice(i, 1)
          }
@@ -461,6 +514,12 @@ function redu(e) {
 
 }
 function corr(e) {
+   let priceType = ''
+   if (e.classList.contains('kg')) {
+      priceType = 'kg'
+   } else {
+      priceType = 'piece'
+   }
    let type = e.parentElement.parentElement.parentElement.parentElement.getAttribute('data-type')
    let img, contents, id
 
@@ -483,14 +542,21 @@ function corr(e) {
    }
 
 
-   
+
    for (let i = 0; i < the_cart.length; i++) {
       if (the_cart[i].id == id && the_cart[i].type == type) {
 
          if (document.querySelector('#cart' + type + the_cart[i].id)) {
-            the_cart[i].qty = e.value
-            document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML = e.value
-            
+            if (priceType == 'kg') {
+               the_cart[i].qty = e.value / 1000
+               document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML = e.value + 'g'
+
+            } else {
+               the_cart[i].qty = e.value
+               document.querySelector('#cart' + type + the_cart[i].id).querySelector('span.qty').innerHTML = e.value
+            }
+
+
 
          }
       }
@@ -513,7 +579,7 @@ function corr(e) {
 
    }
 
-updateTotal(the_cart)
+   updateTotal(the_cart)
 }
 
 
@@ -795,7 +861,7 @@ function reduIng(e) {
 function updateSubtotal(up, tp, qt, p) {
    let name = up.parentElement.parentElement.querySelector('.fr').getAttribute('data-content')
    let unitPrice = up.innerHTML.match(/\d/g);
-unitPrice = unitPrice.join("");
+   unitPrice = unitPrice.join("");
    let quantity = qt.value
 
    let subTotal = unitPrice * quantity
@@ -809,14 +875,14 @@ unitPrice = unitPrice.join("");
    let totalPrice = 0
    for (let i = 0; i < subTotals.length; i++) {
       let pr = subTotals[i].innerHTML.match(/\d/g)
-pr = Number(pr.join(""));
+      pr = Number(pr.join(""));
       totalPrice += pr
 
    }
 
-   paidIngredients.forEach(inp=>{
+   paidIngredients.forEach(inp => {
       if (inp.checked) {
-         totalPrice+= 50;
+         totalPrice += 50;
       }
    })
 
@@ -988,10 +1054,9 @@ function reduceQty(e) {
 
    redu(inp)
 
-   if (e.innerHTML == 0) {
-      delCartItem(e.parentElement.parentElement.parentElement)
-   }
 
+
+   corr(e)
 
    updateTotal(the_cart)
 }
@@ -1017,7 +1082,6 @@ function increaseQty(e) {
       inp = document.querySelector(`.${type}${id} .sandwichPrice .quantity input[type="number"]`)
 
    }
-
    incr(inp)
 
 }
@@ -1036,8 +1100,8 @@ function fixOrderType(a) {
          orderType = 'sur place'
          document.querySelector('#typeInp').value = 'sur place'
          additionalPrice = 0
-         document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
-            el.innerHTML =''
+         document.querySelectorAll('.cartTotal .livPrice').forEach(el => {
+            el.innerHTML = ''
          })
 
       } else if (a == 'emp') {
@@ -1045,8 +1109,8 @@ function fixOrderType(a) {
          orderType = 'emporter'
          document.querySelector('#typeInp').value = 'emporter'
          additionalPrice = 0
-         document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
-            el.innerHTML =''
+         document.querySelectorAll('.cartTotal .livPrice').forEach(el => {
+            el.innerHTML = ''
          })
 
 
@@ -1056,25 +1120,25 @@ function fixOrderType(a) {
          document.querySelector('#typeInp').value = 'livraison'
          additionalPrice = 300
 
-         document.querySelectorAll('.label input').forEach(inp=>{
-            inp.addEventListener('input',(e)=>{
-               if(e.target.id == 'bbhsen-inp'){
+         document.querySelectorAll('.label input').forEach(inp => {
+            inp.addEventListener('input', (e) => {
+               if (e.target.id == 'bbhsen-inp') {
                   additionalPrice = 300
-               } else if(e.target.id == 'drria-inp'){
+               } else if (e.target.id == 'drria-inp') {
                   additionalPrice = 400
-               } else if (e.target.id == 'autres-inp'){
+               } else if (e.target.id == 'autres-inp') {
                   additionalPrice = 500
                }
 
 
 
-               document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
-                  el.innerHTML ="+"+ additionalPrice + "DA"
+               document.querySelectorAll('.cartTotal .livPrice').forEach(el => {
+                  el.innerHTML = "+" + additionalPrice + "DA"
                })
             })
-            
-            document.querySelectorAll('.cartTotal .livPrice').forEach(el=>{
-               el.innerHTML ="+"+ additionalPrice + "DA"
+
+            document.querySelectorAll('.cartTotal .livPrice').forEach(el => {
+               el.innerHTML = "+" + additionalPrice + "DA"
             })
          })
 
@@ -1101,7 +1165,7 @@ plcommande.addEventListener('click', () => {
          err('Entrer votre Nom.')
          inpErr(document.querySelector('#empNom'))
          return;
-      } else if (document.querySelector('#empNum').value == ''){
+      } else if (document.querySelector('#empNum').value == '') {
          err('Entrer votre Numéro de téléphone.')
          inpErr(document.querySelector('#empNum'))
          return;
@@ -1115,18 +1179,18 @@ tél: ${document.querySelector('#empNum').value}`
          err('Entrer votre Nom.')
          inpErr(document.querySelector('#livName'))
          return;
-      } else if (document.querySelector('#livNum').value == ''){
+      } else if (document.querySelector('#livNum').value == '') {
          err('Entrer votre Numéro de téléphone.')
          inpErr(document.querySelector('#livNum'))
          return;
       }
 
       let location = ''
-      if(document.querySelector('#bbhsen-inp').checked){
+      if (document.querySelector('#bbhsen-inp').checked) {
          location = 'baba hsen'
-      } else if(document.querySelector('#drria-inp').checked){
+      } else if (document.querySelector('#drria-inp').checked) {
          location = 'draria'
-      } else if(document.querySelector('#autres-inp').checked){
+      } else if (document.querySelector('#autres-inp').checked) {
          if (document.querySelector('#livLocation').value == '') {
             err('Entrer votre Location.')
             inpErr(document.querySelector('#livLocation'))
@@ -1146,14 +1210,14 @@ loc: ${location}`
    finalForm.submit()
 })
 
-function err(msg){
+function err(msg) {
    let notifier = new AWN()
-   notifier.alert(msg, {}) 
+   notifier.alert(msg, {})
 }
 
-function inpErr(inp){
+function inpErr(inp) {
    inp.classList.add('err');
-   inp.addEventListener('input',() => {
+   inp.addEventListener('input', () => {
       inp.classList.remove('err')
    })
 }

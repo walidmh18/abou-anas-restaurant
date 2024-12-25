@@ -96,7 +96,7 @@ header("Location: ../login?err=3");
          $result = mysqli_query($con, $sql);
          while ($row = mysqli_fetch_assoc($result)) {
             $id = $row['id'];
-
+            
          ?>
 
             <div class="categoriesShow <?= $row['name_fr'] ?>">
@@ -112,7 +112,7 @@ header("Location: ../login?err=3");
                      <img src="<?= $row2['image_address'] ?>" alt="<?= $row2['name_fr'] ?>">
                      <p class="fr"><?= $row2['name_fr'] ?></p>
                      <p class="ar"><?= $row2['name_ar'] ?></p>
-                     <p class="price"><?= $row2['price'] ?></p>
+                     <p class="price"><?= $row2['price'] ?> </p>
                      <button onclick="popup(this.parentElement.id)" class="y-button">Modifier</button>
                   </div>
                <?php
@@ -171,6 +171,20 @@ header("Location: ../login?err=3");
             <div class="inp">
                <label for="prix">Prix</label>
                <input type="text" name="prix" id="prix">
+            </div>
+            <div class="inp">
+               <label for="priceTypeInp">Type</label>
+               <select name="priceTypeInp" id="priceTypeInp">
+                  <!-- <option value="1" selected hidden>choisir une option</option> -->
+                  
+                     <option value="piece" selected>par piece</option>
+                     <option value="kg">par KG</option>
+
+
+
+                  
+
+               </select>
             </div>
 
             <div class="inp">
